@@ -1,5 +1,5 @@
 <div class="card-body">
-    <form action="{{ route('admin.page_categories.index') }}" method="get">
+    <form action="{{ route('admin.playlists.index') }}" method="get">
         <div class="row">
             <div class="col-8 col-sm-4 col-md-2">
                 <div class="form-group">
@@ -36,11 +36,6 @@
                             {{ old('sort_by', request()->input('sort_by')) == 'created_at' ? 'selected' : '' }}>
                             {{ __('panel.created_at') }}
                         </option>
-                        <option value="published_on"
-                            {{ old('sort_by', request()->input('sort_by')) == 'published_on' ? 'selected' : '' }}>
-                            {{ __('panel.published_on') }}
-                        </option>
-
                     </select>
                 </div>
             </div>
