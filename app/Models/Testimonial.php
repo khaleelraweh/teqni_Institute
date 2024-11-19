@@ -20,8 +20,9 @@ class Testimonial extends Model
 
     protected $searchable = [
         'columns' => [
-            'testimonial.name' => 10,
-            'testimonial.title' => 10,
+            'testimonials.name' => 10,
+            'testimonials.title' => 10,
+            'testimonials.content' => 10,
         ]
     ];
 
