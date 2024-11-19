@@ -1,0 +1,19 @@
+.sidebar .sidebar-body .nav {
+    padding: 25px 15px 25px 15px;
+}
+
+.sidebar .sidebar-body .nav .nav-item .nav-link {
+    height: 38px;
+}
+
+.sidebar .sidebar-body .nav .nav-item .nav-link .link-title {
+    margin-right: 15px;
+}
+
+.sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-title {
+    margin-right: 21px;
+}
+
+.sidebar .sidebar-body .nav .nav-item.active .nav-link::before {
+    right: -15px;
+}
