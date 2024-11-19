@@ -1521,6 +1521,7 @@ return [
     'get_in_touch'                                      =>  'تواصل معنا',
     'get_in_touch_message'                              =>  'للتواصل والاستفسار يرجي كتابة رسالتك هنا',
     'welcome_to_dashboard'                              =>  'مرحبا بك في لوحة التحكم',
+    'doc_archive_name'                                  =>  'اسم الارشيف',
 
 
 

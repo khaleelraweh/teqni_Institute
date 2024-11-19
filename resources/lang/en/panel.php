@@ -1555,5 +1555,6 @@ return [
     'get_in_touch'                                      =>  'Get In Touch',
     'get_in_touch_message'                              =>  'For contact and inquiries, please write your message here',
     'welcome_to_dashboard'                              =>  'Welcome to dashboard',
+    'doc_archive_name'                                  =>  'Archive Name',
 
 ];
