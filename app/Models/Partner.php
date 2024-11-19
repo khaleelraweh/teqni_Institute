@@ -22,7 +22,8 @@ class Partner extends Model
     // searchable lab 
     protected $searchable = [
         'columns' => [
-            'partner.name' => 10,
+            'partners.name' => 10,
+            'partners.description' => 10,
         ]
     ];
 
