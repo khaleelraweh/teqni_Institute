@@ -7,11 +7,10 @@
                         class="form-control" placeholder="{{ __('panel.keyword') }}">
                 </div>
             </div>
-            <div class="col-md-2
-                        d-none d-md-block">
+            <div class="col-md-2 d-none d-md-block">
                 <div class="form-group">
                     <select name="status" class="form-control">
-                        <option value="">{{ __('panel.show_all') }}</option>
+                        <option value=""> {{ __('panel.show_all') }}</option>
                         <option value="1" {{ old('status', request()->input('status')) == '1' ? 'selected' : '' }}>
                             {{ __('panel.status_active') }}
                         </option>
@@ -29,8 +28,8 @@
                             {{ old('sort_by', request()->input('sort_by')) == 'id' ? 'selected' : '' }}>
                             {{ __('panel.id') }}
                         </option>
-                        <option value="name_ar"
-                            {{ old('sort_by', request()->input('sort_by')) == 'name_ar' ? 'selected' : '' }}>
+                        <option value="title"
+                            {{ old('sort_by', request()->input('sort_by')) == 'title' ? 'selected' : '' }}>
                             {{ __('panel.title') }}
                         </option>
                         <option value="created_at"
@@ -65,17 +64,13 @@
                     <select name="limit_by" class="form-control">
                         {{-- <option value="">---</option> --}}
                         <option value="10"
-                            {{ old('limit_by', request()->input('limit_by')) == '10' ? 'selected' : '' }}>10
-                        </option>
+                            {{ old('limit_by', request()->input('limit_by')) == '10' ? 'selected' : '' }}>10</option>
                         <option value="20"
-                            {{ old('limit_by', request()->input('limit_by')) == '20' ? 'selected' : '' }}>20
-                        </option>
+                            {{ old('limit_by', request()->input('limit_by')) == '20' ? 'selected' : '' }}>20</option>
                         <option value="50"
-                            {{ old('limit_by', request()->input('limit_by')) == '50' ? 'selected' : '' }}>50
-                        </option>
+                            {{ old('limit_by', request()->input('limit_by')) == '50' ? 'selected' : '' }}>50</option>
                         <option value="100"
-                            {{ old('limit_by', request()->input('limit_by')) == '100' ? 'selected' : '' }}>100
-                        </option>
+                            {{ old('limit_by', request()->input('limit_by')) == '100' ? 'selected' : '' }}>100</option>
                     </select>
                 </div>
             </div>
