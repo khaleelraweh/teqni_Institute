@@ -36,10 +36,6 @@
                             {{ old('sort_by', request()->input('sort_by')) == 'created_at' ? 'selected' : '' }}>
                             {{ __('panel.created_at') }}
                         </option>
-                        <option value="published_on"
-                            {{ old('sort_by', request()->input('sort_by')) == 'published_on' ? 'selected' : '' }}>
-                            {{ __('panel.published_on') }}
-                        </option>
 
                     </select>
                 </div>
