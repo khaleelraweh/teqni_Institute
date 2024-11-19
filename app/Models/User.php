@@ -48,6 +48,17 @@ class User extends Authenticatable implements MustVerifyEmail
     // to get full name as property instead of first_name and last_name
     protected $appends = ['full_name'];
 
+    protected $searchable = [
+        'columns' => [
+
+            'users.first_name' => 10,
+            'users.last_name' => 10,
+            'users.username' => 10,
+            'users.email' => 10,
+            'users.mobile' => 10,
+        ]
+    ];
+
     // ucfirst : get first alphabet as bigger alpha
     public function getFullNameAttribute(): string
     {
