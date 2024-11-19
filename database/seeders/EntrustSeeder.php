@@ -369,7 +369,7 @@ class EntrustSeeder extends Seeder
 
 
         //page Categories 
-        $managePageCategories = Permission::create(['name' => 'manage_page_categories', 'display_name' => ['ar' => 'إدارة تصنيف الصفحات', 'en' => 'Manage Page Categories'], 'route' => 'page_categories', 'module' => 'page_categories', 'as' => 'page_categories.index', 'icon' => 'far fa-file-alt', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '115',]);
+        $managePageCategories = Permission::create(['name' => 'manage_page_categories', 'display_name' => ['ar' => 'إدارة الصفحات', 'en' => 'Manage Page '], 'route' => 'page_categories', 'module' => 'page_categories', 'as' => 'page_categories.index', 'icon' => 'far fa-file-alt', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '115',]);
         $managePageCategories->parent_show = $managePageCategories->id;
         $managePageCategories->save();
         $showPages    =  Permission::create(['name' => 'show_page_categories',  'display_name' => ['ar'     => 'إدارة تصنيف الصفحات ', 'en'  =>   'manage Page Categories'], 'route' => 'page_categories', 'module' => 'page_categories', 'as' => 'page_categories.index', 'icon' => 'far fa-file-alt', 'parent' => $managePageCategories->id, 'parent_original' => $managePageCategories->id, 'parent_show' => $managePageCategories->id, 'sidebar_link' => '1', 'appear' => '1']);
