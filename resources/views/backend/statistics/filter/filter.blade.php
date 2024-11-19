@@ -1,5 +1,5 @@
 <div class="card-body">
-    <form action="{{ route('admin.advertisor_sliders.index') }}" method="get">
+    <form action="{{ route('admin.statistics.index') }}" method="get">
         <div class="row">
             <div class="col-8 col-sm-4 col-md-2">
                 <div class="form-group">
