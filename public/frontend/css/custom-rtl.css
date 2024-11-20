@@ -934,6 +934,7 @@ a:hover {
 .rs-slider.style1 .slider-content .sl-sub-title{
     font-size: 1.375em;
     line-height: 2em;
+    margin-bottom: 0.625em;
 }
 .rs-slider.style1 .slider-content .sl-title{
     font-size: 1.875em;
