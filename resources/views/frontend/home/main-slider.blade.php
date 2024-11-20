@@ -21,7 +21,7 @@
                     // $main_slider_img = asset('frontend/images/slider/main-home/1.jpg');
                 }
             @endphp
-            {{ dd($main_slider_img) }}
+
             <div class="slider-content slide1" style="background-image: url({{ $main_slider_img }})">
                 {{-- <div class="container" style="height: 150vh;"> --}}
                 <div class="container">
