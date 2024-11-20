@@ -928,3 +928,14 @@ a:hover {
 .contact-page-section .rs-quick-contact .form-group .btn-send {
     background-color: #248874;
 }
+
+
+/* main slider custom font size  */ 
+.rs-slider.style1 .slider-content .sl-sub-title{
+    font-size: 1.375em;
+    line-height: 2em;
+}
+.rs-slider.style1 .slider-content .sl-title{
+    font-size: 1.875em;
+    line-height: 2.5em;
+}
