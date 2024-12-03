@@ -1612,7 +1612,7 @@ return [
     'welcome_to_dashboard'                              =>  'مرحبا بك في لوحة التحكم',
     'doc_archive_name'                                  =>  'اسم الارشيف',
 
-    'website_shortcuts'                     =>  'Website shortcuts',
+
 
     // --------------- common in tracks menu ----------//
     'website_shortcuts'                     =>  'اختصارات الموقع',
