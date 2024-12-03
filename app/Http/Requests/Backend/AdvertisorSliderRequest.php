@@ -27,7 +27,7 @@ class AdvertisorSliderRequest extends FormRequest
             case 'POST': {
                     return [
                         'icon'        =>  'nullable',
-                        'title.*'       =>  'required|max:255|unique_translation:sliders',
+                        'title.ar'       =>  'required|max:255|unique_translation:sliders',
                         'subtitle.*'        =>  'nullable',
                         'description.*'       =>  'nullable',
                         'url'           =>  'nullable',
@@ -44,7 +44,7 @@ class AdvertisorSliderRequest extends FormRequest
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
+                        'published_on'              =>  'required',
                         'published_on_time'  =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -74,7 +74,7 @@ class AdvertisorSliderRequest extends FormRequest
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
+                        'published_on'              =>  'required',
                         'published_on_time'  =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -93,6 +93,8 @@ class AdvertisorSliderRequest extends FormRequest
         $attr = [
             'link'      => '( ' . __('panel.link') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

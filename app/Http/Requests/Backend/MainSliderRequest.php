@@ -26,7 +26,7 @@ class MainSliderRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'title.*'               =>  'required|max:255|unique_translation:sliders',
+                        'title.ar'               =>  'required|max:255|unique_translation:sliders',
                         'subtitle.*'            =>  'nullable',
                         'description.*'         =>  'nullable',
                         'url'                   =>  'nullable',
@@ -38,10 +38,13 @@ class MainSliderRequest extends FormRequest
                         'images'                =>  'required',
                         'images.*'              =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
 
+                        'metadata_title.*'              =>  'nullable',
+                        'metadata_description.*'        =>  'nullable',
+                        'metadata_keywords.*'           =>  'nullable',
+
                         // used always 
                         'status'                =>  'required',
-                        'published_on'          =>  'nullable',
-                        'published_on_time'     =>  'nullable',
+                        'published_on'              =>  'required',
                         'created_by'            =>  'nullable',
                         'updated_by'            =>  'nullable',
                         'deleted_by'            =>  'nullable',
@@ -51,7 +54,7 @@ class MainSliderRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title.*'           =>  'required|max:255|unique_translation:sliders,title,' . $this->route()->main_slider,
+                        'title.ar'           =>  'required|max:255|unique_translation:sliders,title,' . $this->route()->main_slider,
                         'subtitle.*'        =>  'nullable',
                         'description.*'     =>  'nullable',
                         'url'               =>  'nullable',
@@ -63,10 +66,13 @@ class MainSliderRequest extends FormRequest
                         'images'            =>  'nullable',
                         'images.*'          =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
 
+                        'metadata_title.*'              =>  'nullable',
+                        'metadata_description.*'        =>  'nullable',
+                        'metadata_keywords.*'           =>  'nullable',
+
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'              =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -84,6 +90,8 @@ class MainSliderRequest extends FormRequest
         $attr = [
             'link'      => '( ' . __('panel.link') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

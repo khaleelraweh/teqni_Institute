@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\PageRequest;
 use App\Models\Page;
 use App\Models\PageCategory;
-use App\Models\WebMenu;
-use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Carbon\Carbon;
 
 class PagesController extends Controller
 {
@@ -30,7 +29,9 @@ class PagesController extends Controller
             ->when(\request()->status != null, function ($query) {
                 $query->where('status', \request()->status);
             })
-            ->orderBy(\request()->sort_by ?? 'created_at', \request()->order_by ?? 'desc')
+            ->orderByRaw(request()->sort_by == 'published_on'
+                ? 'published_on IS NULL, published_on ' . (request()->order_by ?? 'desc')
+                : (request()->sort_by ?? 'created_at') . ' ' . (request()->order_by ?? 'desc'))
             ->paginate(\request()->limit_by ?? 100);
 
         return view('backend.pages.index', compact('pages'));
@@ -55,12 +56,29 @@ class PagesController extends Controller
         $input['content']               = $request->content;
         $input['page_category_id']      =   $request->page_category_id;
 
-        $input['metadata_title']        = $request->metadata_title;
-        $input['metadata_description']  = $request->metadata_description;
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->title[$localeKey] ?? null;
+        }
+        $input['metadata_description'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $content = $request->content[$localeKey] ?? '';
+            // Remove all tags and decode HTML entities
+            $plainContent = html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5);
+            // Limit to 30 words
+            $limitedContent = implode(' ', array_slice(explode(' ', $plainContent), 0, 30));
+            $input['metadata_description'][$localeKey] = $request->metadata_description[$localeKey]
+                ?: $limitedContent ?: null;
+        }
         $input['metadata_keywords']     = $request->metadata_keywords;
 
         $input['status']                =   $request->status;
         $input['created_by']            = auth()->user()->full_name;
+
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
 
 
         $page = Page::create($input);
@@ -137,12 +155,30 @@ class PagesController extends Controller
 
         $input['page_category_id']   =   $request->page_category_id;
 
-        $input['metadata_title'] = $request->metadata_title;
-        $input['metadata_description'] = $request->metadata_description;
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->title[$localeKey] ?? null;
+        }
+        $input['metadata_description'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $content = $request->content[$localeKey] ?? '';
+            // Remove all tags and decode HTML entities
+            $plainContent = html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5);
+            // Limit to 30 words
+            $limitedContent = implode(' ', array_slice(explode(' ', $plainContent), 0, 30));
+            $input['metadata_description'][$localeKey] = $request->metadata_description[$localeKey]
+                ?: $limitedContent ?: null;
+        }
         $input['metadata_keywords'] = $request->metadata_keywords;
 
         $input['status']            =   $request->status;
         $input['created_by'] = auth()->user()->full_name;
+
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
+
 
         $page->update($input);
 
@@ -237,5 +273,19 @@ class PagesController extends Controller
         }
         $image->delete();
         return true;
+    }
+
+    public function updatePageStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            Page::where('id', $data['page_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'page_id' => $data['page_id']]);
+        }
     }
 }

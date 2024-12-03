@@ -19,7 +19,7 @@ class PresidentSpeech extends Model
     use HasFactory, HasTranslations, HasTranslatableSlug, SearchableTrait;
 
     protected $guarded = [];
-    public $translatable = ['title', 'slug', 'content'];
+    public $translatable = ['title', 'slug', 'content', 'metadata_title', 'metadata_description', 'metadata_keywords'];
 
 
     protected $casts = [

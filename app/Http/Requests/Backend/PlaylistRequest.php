@@ -26,7 +26,7 @@ class PlaylistRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'title.*'                   =>  'required|max:255',
+                        'title.ar'                   =>  'required|max:255',
                         'description.*'                 =>  'nullable',
                         'metadata_title.*'          =>  'nullable',
                         'metadata_description.*'    =>  'nullable',
@@ -36,6 +36,7 @@ class PlaylistRequest extends FormRequest
 
                         // used always 
                         'status'                    =>  'required',
+                        'published_on'              =>  'required',
                         'created_by'                =>  'nullable',
                         'updated_by'                =>  'nullable',
                         'deleted_by'                =>  'nullable',
@@ -46,7 +47,7 @@ class PlaylistRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title.*'                   =>   'required|max:255',
+                        'title.ar'                   =>   'required|max:255',
                         'description.*'                 =>   'nullable',
                         'metadata_title.*'          =>  'nullable',
                         'metadata_description.*'    =>  'nullable',
@@ -56,6 +57,7 @@ class PlaylistRequest extends FormRequest
 
                         // used always 
                         'status'             =>  'required',
+                        'published_on'              =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -73,6 +75,8 @@ class PlaylistRequest extends FormRequest
         $attr = [
             'description'      => '( ' . __('panel.f_description') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

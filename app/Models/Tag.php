@@ -62,4 +62,15 @@ class Tag extends Model
     {
         return $this->status ? __('panel.status_active') : __('panel.status_inactive');
     }
+
+    public function section()
+    {
+        if ($this->section == 1)
+            return __('panel.course_tag');
+        else if ($this->section == 2)
+            return __('panel.event_tag');
+        else if ($this->section == 3) {
+            return __('panel.post_tag');
+        }
+    }
 }

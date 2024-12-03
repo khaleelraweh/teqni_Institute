@@ -25,6 +25,7 @@ class PageCategory extends Model
     protected $searchable = [
         'columns' => [
             'page_categories.title' => 10,
+            'page_categories.content' => 10,
         ]
     ];
 
@@ -81,5 +82,10 @@ class PageCategory extends Model
     public function lastMedia(): MorphOne
     {
         return $this->MorphOne(Photo::class, 'imageable')->orderBy('file_sort', 'desc');
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class);
     }
 }

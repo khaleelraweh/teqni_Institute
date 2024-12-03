@@ -26,17 +26,20 @@ class PartnerRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'name'                          =>  'required|max:255',
+                        'name.ar'                          =>  'required|max:255',
                         'description.*'                 =>  'nullable',
-                        'partner_link'                  =>  'nullable',
+                        'partner_link.*'                  =>  'nullable',
                         'partner_image'                  =>  'required',
                         'partner_image.*'                =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
                         'views'                         =>  'nullable', // عدد مرات العرض
 
+                        'metadata_title.*'              =>  'nullable',
+                        'metadata_description.*'        =>  'nullable',
+                        'metadata_keywords.*'           =>  'nullable',
+
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'       =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -46,16 +49,19 @@ class PartnerRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'name'                  =>  'required|max:255',
+                        'name.ar'                  =>  'required|max:255',
                         'description.*'           =>  'nullable',
-                        'partner_link'           =>  'nullable',
+                        'partner_link.*'           =>  'nullable',
                         'partner_image'                =>  'nullable',
                         'partner_image.*'              =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
 
+                        'metadata_title.*'              =>  'nullable',
+                        'metadata_description.*'        =>  'nullable',
+                        'metadata_keywords.*'           =>  'nullable',
+
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'       =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -68,14 +74,21 @@ class PartnerRequest extends FormRequest
         }
     }
 
+
+
     public function attributes(): array
     {
         $attr = [
-            'name'                 =>  '(' . __('panel.name') . ')',
-            'description'           =>  '(' . __('panel.description') . ')',
+            'partner_image'      => '( ' . __('panel.images') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
-            'partner_image'    =>  '( ' . __('panel.partner_image') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
+
+        foreach (config('locales.languages') as $key => $val) {
+            $attr += ['name.' . $key       =>  "( " . __('panel.name')   . ' ' . __('panel.in') . ' ' . __('panel.' . $val['lang'])   . " )",];
+        }
+
 
         return $attr;
     }

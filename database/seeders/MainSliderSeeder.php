@@ -26,7 +26,7 @@ class MainSliderSeeder extends Seeder
             'slug'          => ['ar' => $faker->unique()->slug(3), 'en' => $faker->unique()->slug(3)],
             'description'   => ['ar' => ' التكنولوجيا تجلب موجة ناجحة من التعلم في العديد من المناحي المختلفة ', 'en' => ' Technology Is Brining A Missave Wave Of Education On Learning Thinks On Different Ways '],
 
-            'url'           =>  'https://' . $faker->slug(2) . '.com',
+            'url'           => ['ar' => 'https://' . $faker->slug(2) . '.com', 'en' => 'https://' . $faker->slug(2) . '.com'],
             'btn_title'     => ['ar' => 'العثور على الدورات', 'en' => 'Find Courses'],
             'target'        =>  Arr::random($target),
             'published_on'  =>  $faker->dateTime(),
@@ -43,7 +43,7 @@ class MainSliderSeeder extends Seeder
             'slug'          => ['ar' => $faker->unique()->slug(3), 'en' => $faker->unique()->slug(3)],
             'description'   => ['ar' => ' التكنولوجيا تجلب موجة ناجحة من التعلم في العديد من المناحي المختلفة ', 'en' => ' Technology Is Brining A Missave Wave Of Education On Learning Thinks On Different Ways '],
 
-            'url'           =>  'https://' . $faker->slug(2) . '.com',
+            'url'           => ['ar' => 'https://' . $faker->slug(2) . '.com', 'en' => 'https://' . $faker->slug(2) . '.com'],
             'btn_title'         => ['ar' => 'العثور على الدورات', 'en' => 'Find Courses'],
 
             'target'        =>  Arr::random($target),

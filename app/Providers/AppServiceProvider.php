@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Menu;
 use App\Models\Post;
 use App\Models\SiteSetting;
-use App\Models\WebMenu;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -36,8 +36,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        if (Schema::hasTable('web_menus')) {
-            $web_menus = WebMenu::tree();
+        if (Schema::hasTable('menus')) {
+            $web_menus = Menu::tree();
             View::share('web_menus', $web_menus);
         }
 

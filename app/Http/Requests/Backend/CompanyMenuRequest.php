@@ -26,18 +26,15 @@ class CompanyMenuRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        // 'title.*' => 'required|max:255|unique_translation:web_menus,title,NULL,section,section,' . $this->get('section'),
-                        'title.*' => 'required|max:255',
-
-
-                        'link'          =>  'nullable',
+                        'title.ar' => 'required|max:255',
+                        'description.*'              =>   'nullable',
+                        'link.*'          =>  'nullable',
                         'icon'          =>  'nullable',
                         'parent_id'     =>  'nullable',
-                        'section'       =>  'required',
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
+                        'published_on'              =>  'required',
                         'published_on_time'  =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -49,19 +46,16 @@ class CompanyMenuRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        // 'title.*' => 'required|unique_translation:web_menus,title,NULL,section,section,' . $this->get('section') . ',id,id' . $this->route()->company_menu,
-                        'title.*'           =>   'required|max:255',
-
-                        'section'           =>   'required',
-
-                        'link'              =>   'nullable',
+                        'title.ar'           =>   'required|max:255',
+                        'description.*'              =>   'nullable',
+                        'link.*'              =>   'nullable',
                         'icon'              =>  'nullable',
                         'parent_id'         =>   'nullable',
 
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
+                        'published_on'              =>  'required',
                         'published_on_time'  =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -80,6 +74,8 @@ class CompanyMenuRequest extends FormRequest
         $attr = [
             'link'      => '( ' . __('panel.link') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

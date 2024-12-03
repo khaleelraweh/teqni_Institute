@@ -26,12 +26,13 @@ class CommonQuestionVideoRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'title.*'               => 'required|unique_translation:common_question_videos',
-                        'link.*'                => 'required',
-                        'question_video_image'  => 'nullable|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
+                        'title.ar'               => 'required|unique_translation:common_question_videos',
+                        'link.ar'                => 'required',
+                        'question_video_image'  => 'required|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
 
                         // used always 
                         'status'                =>  'required',
+                        'published_on'                      =>  'required',
                         'created_by'            =>  'nullable',
                         'updated_by'            =>  'nullable',
                         'deleted_by'            =>  'nullable',
@@ -42,12 +43,13 @@ class CommonQuestionVideoRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title.*'               => 'required|max:255|unique_translation:common_question_videos,title,' . $this->route()->common_question_video,
-                        'link.*'                => 'required',
-                        'question_video_image'  => 'nullable|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
+                        'title.ar'               => 'required|max:255|unique_translation:common_question_videos,title,' . $this->route()->common_question_video,
+                        'link.ar'                => 'required',
+                        'question_video_image'  => 'required|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
 
                         // used always 
                         'status'                =>  'required',
+                        'published_on'                      =>  'required',
                         'created_by'            =>  'nullable',
                         'updated_by'            =>  'nullable',
                         'deleted_by'            =>  'nullable',
@@ -59,5 +61,23 @@ class CommonQuestionVideoRequest extends FormRequest
             default:
                 break;
         }
+    }
+
+    public function attributes(): array
+    {
+        $attr = [
+            'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+            'question_video_image'      => '( ' . __('panel.images') . ' )',
+
+        ];
+
+        foreach (config('locales.languages') as $key => $val) {
+            $attr += ['title.' . $key       =>  "( " . __('panel.title')   . ' ' . __('panel.in') . ' ' . __('panel.' . $val['lang'])   . " )",];
+            $attr += ['description.' . $key       =>  "( " . __('panel.description')   . ' ' . __('panel.in') . ' ' . __('panel.' . $val['lang'])   . " )",];
+        }
+
+
+        return $attr;
     }
 }

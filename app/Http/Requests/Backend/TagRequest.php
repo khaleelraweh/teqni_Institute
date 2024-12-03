@@ -26,13 +26,12 @@ class TagRequest extends FormRequest
             switch ($this->method()) {
                 case 'POST': {
                         return [
-                            'name.*'          =>  'required|max:255|unique_translation:tags',
+                            'name.ar'          =>  'required|max:255|unique_translation:tags',
                             'section'       =>  'nullable',
 
                             // used always 
                             'status'             =>  'required',
-                            'published_on'       =>  'nullable',
-                            'published_on_time'  =>  'nullable',
+                            'published_on'              =>  'required',
                             'created_by'         =>  'nullable',
                             'updated_by'         =>  'nullable',
                             'deleted_by'         =>  'nullable',
@@ -42,13 +41,12 @@ class TagRequest extends FormRequest
                 case 'PUT':
                 case 'PATCH': {
                         return [
-                            'name.*'       => 'required|max:255|unique_translation:tags,name,' . $this->route()->tag,
+                            'name.ar'       => 'required|max:255|unique_translation:tags,name,' . $this->route()->tag,
                             'section'    => 'nullable',
 
                             // used always 
                             'status'             =>  'required',
-                            'published_on'       =>  'nullable',
-                            'published_on_time'  =>  'nullable',
+                            'published_on'              =>  'required',
                             'created_by'         =>  'nullable',
                             'updated_by'         =>  'nullable',
                             'deleted_by'         =>  'nullable',
@@ -68,6 +66,8 @@ class TagRequest extends FormRequest
 
         $attr = [
             'status'            =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

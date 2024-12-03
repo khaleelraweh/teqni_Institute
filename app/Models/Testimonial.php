@@ -15,7 +15,7 @@ class Testimonial extends Model
     use HasFactory, HasTranslations, HasTranslatableSlug, SearchableTrait;
     protected $guarded = [];
 
-    public $translatable = ['name', 'title', 'slug', 'content'];
+    public $translatable = ['name', 'title', 'slug', 'content', 'metadata_title', 'metadata_description', 'metadata_keywords'];
 
 
     protected $searchable = [

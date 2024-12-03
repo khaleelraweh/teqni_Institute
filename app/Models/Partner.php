@@ -17,7 +17,7 @@ class Partner extends Model
     protected $guarded = [];
 
     // for translatable field 
-    public $translatable = ['name', 'slug', 'description', 'partner_link'];
+    public $translatable = ['name', 'slug', 'description', 'partner_link', 'metadata_title', 'metadata_description', 'metadata_keywords'];
 
     // searchable lab 
     protected $searchable = [

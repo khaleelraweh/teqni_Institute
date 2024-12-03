@@ -11,16 +11,16 @@
                             <i class="fa fa-folder"></i>
                             {{ __('panel.manage_company_menus') }}
                         </h3>
-                        <ul class="breadcrumb">
+                        <ul class="breadcrumb pt-3">
                             <li>
                                 <a href="{{ route('admin.index') }}">{{ __('panel.main') }}</a>
                                 @if (config('locales.languages')[app()->getLocale()]['rtl_support'] == 'rtl')
-                                    <i class="fa fa-solid fa-chevron-left chevron"></i>
+                                    /
                                 @else
-                                    <i class="fa fa-solid fa-chevron-right chevron"></i>
+                                    \
                                 @endif
                             </li>
-                            <li>
+                            <li class="ms-1">
                                 {{ __('panel.show_company_menus') }}
                             </li>
                         </ul>
@@ -51,48 +51,119 @@
                                     <th>{{ __('panel.title') }}</th>
                                     <th class="d-none d-sm-table-cell">{{ __('panel.author') }}</th>
                                     <th>{{ __('panel.status') }}</th>
-                                    <th class="d-none d-sm-table-cell">{{ __('panel.created_at') }}</th>
+                                    <th class="d-none d-sm-table-cell">{{ __('panel.published_on') }}</th>
                                     <th class="text-center" style="width:30px;">{{ __('panel.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($company_menus as $menu)
+                                @forelse ($company_menus as $company_menu)
                                     <tr>
                                         <td>
-                                            {{ $menu->title }}
+                                            {{ $company_menu->title }}
                                             <br>
-                                            @if ($menu->parent != null)
+                                            @if ($company_menu->parent != null)
                                                 <small
                                                     style="background: #17a2b8;color:white;padding:1px 3px;border-radius: 5px; font-size:11px">
                                                     {{-- تابع للقائمة: --}}
-                                                    <span>{{ $menu->parent?->title }}</span>
+                                                    <span>{{ $company_menu->parent?->title }}</span>
                                                 </small>
                                             @endif
                                         </td>
-                                        <td class="d-none d-sm-table-cell">{{ $menu->created_by }}</td>
-                                        <td>
-                                            <span
-                                                class="btn btn-round  rounded-pill btn-success btn-xs">{{ $menu->status() }}</span>
+                                        <td class="d-none d-sm-table-cell">
+                                            {{ $company_menu->created_by }}
                                         </td>
-                                        <td class="d-none d-sm-table-cell">{{ $menu->created_at }}</td>
                                         <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="{{ route('admin.company_menus.edit', $menu->id) }}"
+                                            @if ($company_menu->status == 1)
+                                                <a href="javascript:void(0);" class="updateCompanyMenuStatus "
+                                                    id="company-menu-{{ $company_menu->id }}"
+                                                    company_menu_id="{{ $company_menu->id }}">
+                                                    <i class="fas fa-toggle-on fa-lg text-success" aria-hidden="true"
+                                                        status="Active" style="font-size: 1.6em"></i>
+                                                </a>
+                                            @else
+                                                <a href="javascript:void(0);" class="updateCompanyMenuStatus"
+                                                    id="company-menu-{{ $company_menu->id }}"
+                                                    company_menu_id="{{ $company_menu->id }}">
+                                                    <i class="fas fa-toggle-off fa-lg text-warning" aria-hidden="true"
+                                                        status="Inactive" style="font-size: 1.6em"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td class="d-none d-sm-table-cell">
+                                            {{ \Carbon\Carbon::parse($company_menu->published_on)->diffForHumans() }}
+                                        </td>
+                                        <td>
+                                            {{-- <div class="btn-group btn-group-sm">
+                                                <a href="{{ route('admin.company_menus.edit', $company_menu->id) }}"
                                                     class="btn btn-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a href="javascript:void(0);"
-                                                    onclick=" if( confirm('Are you sure to delete this record?') ){document.getElementById('delete-product-category-{{ $menu->id }}').submit();}else{return false;}"
+                                                    onclick=" if( confirm('Are you sure to delete this record?') ){document.getElementById('delete-product-category-{{ $company_menu->id }}').submit();}else{return false;}"
                                                     class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </div>
-                                            <form action="{{ route('admin.company_menus.destroy', $menu->id) }}"
+                                            <form action="{{ route('admin.company_menus.destroy', $company_menu->id) }}"
                                                 method="post" class="d-none"
-                                                id="delete-product-category-{{ $menu->id }}">
+                                                id="delete-product-category-{{ $company_menu->id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                            </form>
+                                            </form> --}}
+
+                                            <div class="btn-group btn-group-sm">
+                                                <div class="dropdown mb-2 ">
+                                                    <a type="button" class="d-flex" id="dropdownMenuButton"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="icon-lg text-muted pb-3px"
+                                                            data-feather="more-vertical"></i>
+                                                        {{ __('panel.operation_options') }}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15"
+                                                            height="15" viewBox="0 0 25 15" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="feather feather-chevron-down link-arrow">
+                                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                                        </svg>
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item d-flex align-items-center"
+                                                            href="{{ route('admin.company_menus.edit', $company_menu->id) }}">
+                                                            <i data-feather="edit-2" class="icon-sm me-2"></i>
+                                                            <span class="">{{ __('panel.operation_edit') }}</span>
+                                                        </a>
+
+                                                        <a href="javascript:void(0);"
+                                                            onclick="confirmDelete('delete-company_menu-{{ $company_menu->id }}', '{{ __('panel.confirm_delete_message') }}', '{{ __('panel.yes_delete') }}', '{{ __('panel.cancel') }}')"
+                                                            class="dropdown-item d-flex align-items-center">
+                                                            <i data-feather="trash" class="icon-sm me-2"></i>
+                                                            <span class="">{{ __('panel.operation_delete') }}</span>
+                                                        </a>
+                                                        <form
+                                                            action="{{ route('admin.company_menus.destroy', $company_menu->id) }}"
+                                                            method="post" class="d-none"
+                                                            id="delete-company_menu-{{ $company_menu->id }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+
+                                                        <a href="javascript:void(0);"
+                                                            class="dropdown-item d-flex align-items-center btn btn-success copyButton"
+                                                            data-copy-text="https://ibbuniv.era-t.com/company_menus/{{ $company_menu->slug }}"
+                                                            data-id="{{ $company_menu->id }}" title="Copy the link">
+                                                            <i data-feather="copy" class="icon-sm me-2"></i>
+                                                            <span
+                                                                class="">{{ __('panel.operation_copy_link') }}</span>
+                                                        </a>
+
+                                                    </div>
+                                                    <span class="copyMessage" data-id="{{ $company_menu->id }}"
+                                                        style="display:none;">
+                                                        {{ __('panel.copied') }}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

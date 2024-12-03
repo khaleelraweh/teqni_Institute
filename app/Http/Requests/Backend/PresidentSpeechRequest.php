@@ -28,11 +28,12 @@ class PresidentSpeechRequest extends FormRequest
                     return [
                         'title.*'       =>  'required|max:255',
                         'content.*'     =>  'nullable',
-                        'promotional_image' => 'nullable|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
+                        'promotional_image' => 'required|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
 
 
                         // used always 
                         'status'             =>  'required',
+                        'published_on'                      =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -45,11 +46,12 @@ class PresidentSpeechRequest extends FormRequest
                     return [
                         'title.*'           =>   'required|max:255',
                         'content.*'         =>   'nullable',
-                        'promotional_image' => 'nullable|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
+                        'promotional_image' => 'required|mimes:jpg,jpeg,png,svg,gif,webp|max:3000',
 
 
                         // used always 
                         'status'             =>  'required',
+                        'published_on'                      =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -67,6 +69,8 @@ class PresidentSpeechRequest extends FormRequest
         $attr = [
             'content'      => '( ' . __('panel.f_content') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'promotional_image'      => '( ' . __('panel.image') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
         ];
 
         foreach (config('locales.languages') as $key => $val) {

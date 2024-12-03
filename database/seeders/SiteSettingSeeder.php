@@ -19,11 +19,11 @@ class SiteSettingSeeder extends Seeder
         $faker = Factory::create();
 
         // site infos
-        SiteSetting::create(['key'    =>  'site_name',          'value' =>  ['ar' => 'المعهد التقني العالي', 'en' => 'High Technical Institute'],       'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_short_name',    'value' =>  ['ar' => 'المعهد التقني العالي', 'en' => 'High Technical Institute'],           'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_address',   'value' =>  ['ar' => 'اليمن-إب-امام مستشفي الثورة', 'en' => 'Yemen-ibb-front of Al-Thawra Hospital'],   'status'    =>  true,   'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_name',          'value' =>  ['ar' => 'جامة إب', 'en' => 'Ibb University'],       'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_short_name',    'value' =>  ['ar' => 'جامعة إب', 'en' => 'Ibb University'],           'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_address',   'value' =>  ['ar' => 'الجمهورية اليمنية', 'en' => 'Republic of Yemen'],   'status'    =>  true,   'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
         SiteSetting::create(['key'    =>  'site_description',   'value' =>  ['ar' => 'التعليم كما تحلم به', 'en' => 'Education as your dreams'],   'status'    =>  true,   'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_link',          'value' =>  'https://teqni.era-t.com',                     'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_link',          'value' =>  'https://www.ibbuniv.edu.ye',                     'status'    =>  true,       'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
         SiteSetting::create(['key'    =>  'site_workTime',  'value' =>   ['ar' => 'طوال ايام الاسبوع', 'en' => 'Every Day In The Week'],   'status'    =>  true,   'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
 
         SiteSetting::create(['key'    =>  'site_img',           'value' =>  '1.jpg',   'status'    =>  true,            'section'   =>  1,   'published_on'  =>  $faker->dateTime()]);
@@ -40,8 +40,8 @@ class SiteSettingSeeder extends Seeder
         SiteSetting::create(['key'    =>  'site_mobile',    'value' =>  '436285',                       'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
         SiteSetting::create(['key'    =>  'site_fax',       'value' =>  'fx',                           'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
         SiteSetting::create(['key'    =>  'site_po_box',    'value' =>  '985',                          'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_email1',    'value' =>  'https://teqni.era-t.com',           'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_email2',    'value' =>  'https://teqni.era-t.com',          'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_email1',    'value' =>  'https://www.ibbuniv.edu.ye',           'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_email2',    'value' =>  'https://www.ibbuniv.edu.ye',          'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
         // SiteSetting::create(['key'    =>  'site_workTime',  'value' =>   ['ar' => 'طوال ايام الاسبوع', 'en' => 'Every Day In The Week'],   'status'    =>  true,   'section'   =>  2,   'published_on'  =>  $faker->dateTime()]);
 
         // site socials
@@ -58,10 +58,10 @@ class SiteSettingSeeder extends Seeder
         SiteSetting::create(['key'    =>  'site_git_scm',      'value' =>  'https://git-scm.com',     'status'    =>  true,   'section'   =>  3,   'published_on'  =>  $faker->dateTime()]);
 
         // site seo
-        SiteSetting::create(['key'    =>  'site_name_meta',         'value' =>  ['ar' => 'المعهد التقني العالي', 'en' => 'High Technical Institute'],   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_name_meta',         'value' =>  ['ar' => 'جامعة إب', 'en' => 'Ibb University'],   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
         SiteSetting::create(['key'    =>  'site_description_meta',  'value' =>  ['ar' => 'واحدة من اعرق الجامعات في اليمن', 'en' => 'One of the most prestigious universities in Yemen'],   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_link_meta',         'value' =>  'https://teqni.era-t.com',   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
-        SiteSetting::create(['key'    =>  'site_keywords_meta',     'value' =>  ['ar' => ' صيدلة , مختبرات , معهد', 'en' => 'Institute , Laboratories , Pharmacy'],   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_link_meta',         'value' =>  'https://www.ibbuniv.edu.ye',   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
+        SiteSetting::create(['key'    =>  'site_keywords_meta',     'value' =>  ['ar' => ' ماجستير , بكلوريوس , جامعة', 'en' => 'University , Bachelor , Master'],   'status'    =>  true,   'section'   =>  4,   'published_on'  =>  $faker->dateTime()]);
 
 
         //site pay method 

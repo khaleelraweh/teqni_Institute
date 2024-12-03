@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\TagRequest;
 use App\Models\Tag;
-use DateTimeImmutable;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -23,8 +23,10 @@ class TagController extends Controller
             ->when(\request()->status != null, function ($query) {
                 $query->where('status', \request()->status);
             })
-            ->orderBy(\request()->sort_by ?? 'id', \request()->order_by ?? 'desc')
-            ->paginate(\request()->limit_by ?? 10);
+            ->orderByRaw(request()->sort_by == 'published_on'
+                ? 'published_on IS NULL, published_on ' . (request()->order_by ?? 'desc')
+                : (request()->sort_by ?? 'created_at') . ' ' . (request()->order_by ?? 'desc'))
+            ->paginate(\request()->limit_by ?? 100);
 
         return view('backend.tags.index', compact('tags'));
     }
@@ -48,9 +50,9 @@ class TagController extends Controller
         $input['status']        =   $request->status;
         $input['created_by']    =   auth()->user()->full_name;
 
-        $published_on = $request->published_on . ' ' . $request->published_on_time;
-        $published_on = new DateTimeImmutable($published_on);
-        $input['published_on'] = $published_on;
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
 
         $tag = Tag::create($input);
 
@@ -98,9 +100,10 @@ class TagController extends Controller
         $input['status']        =   $request->status;
         $input['updated_by']    =   auth()->user()->full_name;
 
-        $published_on = $request->published_on . ' ' . $request->published_on_time;
-        $published_on = new DateTimeImmutable($published_on);
-        $input['published_on'] = $published_on;
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
+
 
         $tag->update($input);
 
@@ -141,5 +144,19 @@ class TagController extends Controller
             'message' => __('panel.something_was_wrong'),
             'alert-type' => 'danger'
         ]);
+    }
+
+    public function updateTagStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            Tag::where('id', $data['tag_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'tag_id' => $data['tag_id']]);
+        }
     }
 }

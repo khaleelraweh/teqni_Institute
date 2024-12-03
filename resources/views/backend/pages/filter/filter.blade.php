@@ -1,7 +1,7 @@
 <div class="card-body">
-    <form action="{{ route('admin.web_menus.index') }}" method="get">
+    <form action="{{ route('admin.pages.index') }}" method="get">
         <div class="row">
-            <div class="col-8 col-sm-4 col-md-2">
+            <div class="col-md-3 col-lg-3 col-8 col-sm-7 ">
                 <div class="form-group">
                     <input type="text" name="keyword" value="{{ old('keyword', request()->input('keyword')) }}"
                         class="form-control" placeholder="{{ __('panel.keyword') }}">
@@ -20,10 +20,18 @@
                     </select>
                 </div>
             </div>
-            <div class="d-none d-sm-block col-sm-4 col-md-2">
+            <div class="col-md-2 d-none d-sm-block col-sm-2 ">
                 <div class="form-group">
                     <select name="sort_by" class="form-control">
-                        {{-- <option value="">---</option> --}}
+                        <option value="" selected>{{ __('panel.show_all') }}</option>
+                        <option value="published_on"
+                            {{ old('sort_by', request()->input('sort_by')) == 'published_on' ? 'selected' : '' }}>
+                            {{ __('panel.published_on') }}
+                        </option>
+                        <option value="created_at"
+                            {{ old('sort_by', request()->input('sort_by')) == 'created_at' ? 'selected' : '' }}>
+                            {{ __('panel.created_at') }}
+                        </option>
                         <option value="id"
                             {{ old('sort_by', request()->input('sort_by')) == 'id' ? 'selected' : '' }}>
                             {{ __('panel.id') }}
@@ -32,15 +40,6 @@
                             {{ old('sort_by', request()->input('sort_by')) == 'title' ? 'selected' : '' }}>
                             {{ __('panel.title') }}
                         </option>
-                        <option value="created_at"
-                            {{ old('sort_by', request()->input('sort_by')) == 'created_at' ? 'selected' : '' }}>
-                            {{ __('panel.created_at') }}
-                        </option>
-                        <option value="published_on"
-                            {{ old('sort_by', request()->input('sort_by')) == 'published_on' ? 'selected' : '' }}>
-                            {{ __('panel.published_on') }}
-                        </option>
-
                     </select>
                 </div>
             </div>
@@ -62,7 +61,7 @@
             <div class="col-md-1 d-none d-md-block">
                 <div class="form-group">
                     <select name="limit_by" class="form-control">
-                        {{-- <option value="">---</option> --}}
+                        <option value="">---</option>
                         <option value="10"
                             {{ old('limit_by', request()->input('limit_by')) == '10' ? 'selected' : '' }}>10</option>
                         <option value="20"
@@ -74,11 +73,15 @@
                     </select>
                 </div>
             </div>
-            <div class="col-2 col-sm-2 col-md-2 ">
-            </div>
-            <div class="col-2 col-sm-2 col-md-1">
+            {{-- <div class="col-1 d-none d-lg-block col-sm-1 col-md-1 ">
+            </div> --}}
+            <div class="col-md-2 col-lg-2 col-4 col-sm-3 d-flex justify-content-end">
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-link">{{ __('panel.search') }}</button>
+                    <button type="submit" name="submit" class="btn   btn-outline-primary">
+                        <i class="fa fa-search "></i>
+                        {{ __('panel.search') }}
+
+                    </button>
                 </div>
             </div>
         </div>

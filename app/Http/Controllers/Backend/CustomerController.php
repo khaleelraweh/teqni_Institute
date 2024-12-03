@@ -67,8 +67,18 @@ class CustomerController extends Controller
 
             $manager = new ImageManager(new Driver());
             $file_name = Str::slug($request->username) . '_' . time() .  "." . $image->getClientOriginalExtension();
+
             $img = $manager->read($request->file('user_image'));
+            // $img = $img->resize(370, 246);
+
             $img->toJpeg(80)->save(base_path('public/assets/customers/' . $file_name));
+
+            // $path = public_path('assets/customers/' . $file_name);
+
+            // Image::make($image->getRealPath())->resize(300, null, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // })->save($path, 100);
+
             $input['user_image'] = $file_name;
         }
 
@@ -126,6 +136,7 @@ class CustomerController extends Controller
             $file_name = Str::slug($request->username) . '_' . time() .  "." . $image->getClientOriginalExtension();
 
             $img = $manager->read($request->file('user_image'));
+            // $img = $img->resize(370, 246);
 
             $img->toJpeg(80)->save(base_path('public/assets/customers/' . $file_name));
 

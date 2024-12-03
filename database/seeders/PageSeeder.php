@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
-use App\Models\WebMenu;
 use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

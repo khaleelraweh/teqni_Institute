@@ -1,16 +1,5 @@
 @extends('layouts.admin')
-@section('style')
-    <style>
-        .note-editor.note-airframe,
-        .note-editor.note-frame {
-            margin-bottom: 0;
-        }
 
-        #offer_ends_group .picker--opened .picker__holder {
-            transform: translateY(-342px) perspective(600px) rotateX(0);
-        }
-    </style>
-@endsection
 
 @section('content')
 
@@ -64,149 +53,261 @@
                 {{-- links of tabs --}}
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
-                            type="button" role="tab" aria-controls="content" aria-selected="true">
-                            {{ __('panel.content_tab') }}
+                        <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
+                            type="button" role="tab" aria-controls="content"
+                            aria-selected="true">{{ __('panel.content_tab') }}
+                        </button>
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="SEO-tab" data-bs-toggle="tab" data-bs-target="#SEO" type="button"
+                            role="tab" aria-controls="SEO" aria-selected="false">{{ __('panel.SEO_tab') }}
                         </button>
                     </li>
 
                 </ul>
-                {{-- contents of links tabs  --}}
+
                 <div class="tab-content" id="myTabContent">
 
-                    {{-- Content Tab --}}
                     <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content">
 
-                        <div class="row">
-                            {{-- البيانات الاساسية --}}
-                            <div class="col-md-12 col-sm-12 ">
-
-                                @foreach (config('locales.languages') as $key => $val)
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-2 pt-3">
-                                            <label for="name[{{ $key }}]">
-                                                {{ __('panel.partner_name') }}
-                                                <span class="language-type">
-                                                    <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
-                                                        name="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
-                                                    {{ __('panel.' . $key) }}
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-12 col-md-10 pt-3">
-                                            <input type="text" name="name[{{ $key }}]"
-                                                id="name[{{ $key }}]" value="{{ old('name.' . $key) }}"
-                                                class="form-control">
-                                            @error('name.' . $key)
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                <hr>
-
-                                @foreach (config('locales.languages') as $key => $val)
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-2 pt-3">
-                                            <label for="description[{{ $key }}]">
-                                                {{ __('panel.description') }}
-                                                <span class="language-type">
-                                                    <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
-                                                        description="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
-                                                    {{ __('panel.' . $key) }}
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-12 col-md-10 pt-3">
-                                            <input type="text" name="description[{{ $key }}]"
-                                                id="description[{{ $key }}]"
-                                                value="{{ old('description.' . $key) }}" class="form-control">
-                                            @error('description.' . $key)
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                <hr>
-
-                                @foreach (config('locales.languages') as $key => $val)
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-2 pt-3">
-                                            <label for="partner_link[{{ $key }}]">
-                                                {{ __('panel.partner_link') }}
-                                                <span class="language-type">
-                                                    <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
-                                                        partner_link="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
-                                                    {{ __('panel.' . $key) }}
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-12 col-md-10 pt-3">
-                                            <input type="text" name="partner_link[{{ $key }}]"
-                                                id="partner_link[{{ $key }}]"
-                                                value="{{ old('partner_link.' . $key) }}" class="form-control">
-                                            @error('partner_link.' . $key)
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                <hr>
-
-                                {{-- status --}}
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-2 pt-3">
-                                        <label for="status">{{ __('panel.status') }}</label>
-                                    </div>
-                                    <div class="col-sm-12 col-md-10 pt-3">
-                                        <select name="status" class="form-control">
-                                            <option value="1" {{ old('status') == '1' ? 'selected' : null }}>
-                                                {{ __('panel.status_active') }}
-                                            </option>
-
-                                            <option value="0" {{ old('status') == '0' ? 'selected' : null }}>
-                                                {{ __('panel.status_inactive') }}
-                                            </option>
-                                        </select>
-                                        @error('status')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="name[{{ $key }}]">
+                                        {{ __('panel.partner_name') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                name="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
                                 </div>
-
-                                <hr>
-
-                                <div class="row ">
-                                    <div class="col-sm-12 col-md-2 pt-3">
-                                        <label for="partner_image">
-                                            {{ __('panel.image') }}
-                                            /
-                                            {{ __('panel.partner_image') }}
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-12 col-md-10 pt-3">
-                                        <div class="file-loading">
-                                            <input type="file" name="partner_image" id="partner_image"
-                                                class="file-input-overview" multiple="multiple">
-                                            @error('partner_image')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <input type="text" name="name[{{ $key }}]" id="name[{{ $key }}]"
+                                        value="{{ old('name.' . $key) }}" class="form-control">
+                                    @error('name.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-
                             </div>
+                        @endforeach
 
+                        <hr>
 
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="description[{{ $key }}]">
+                                        {{ __('panel.description') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                description="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <input type="text" name="description[{{ $key }}]"
+                                        id="description[{{ $key }}]" value="{{ old('description.' . $key) }}"
+                                        class="form-control">
+                                    @error('description.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="partner_link[{{ $key }}]">
+                                        {{ __('panel.partner_link') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                partner_link="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <input type="text" name="partner_link[{{ $key }}]"
+                                        id="partner_link[{{ $key }}]" value="{{ old('partner_link.' . $key) }}"
+                                        class="form-control">
+                                    @error('partner_link.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        <div class="row ">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                <label for="partner_image">
+                                    {{ __('panel.image') }}
+                                    /
+                                    {{ __('panel.partner_image') }}
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="file-loading">
+                                    <input type="file" name="partner_image" id="partner_image"
+                                        class="file-input-overview" multiple="multiple">
+                                </div>
+                                @error('partner_image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                {{ __('panel.published_on') }}
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="input-group flatpickr" id="flatpickr-datetime">
+                                    <input type="text" name="published_on" value="{{ old('published_on') }}"
+                                        class="form-control" placeholder="Select date" data-input>
+                                    <span class="input-group-text input-group-addon" data-toggle>
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                                @error('published_on')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                <label for="status" class="control-label">
+                                    <span>{{ __('panel.status') }}</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_active"
+                                        value="1" {{ old('status', '1') == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_active">
+                                        {{ __('panel.status_active') }}
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_inactive"
+                                        value="0" {{ old('status') == '0' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_inactive">
+                                        {{ __('panel.status_inactive') }}
+                                    </label>
+                                </div>
+                                @error('status')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+
                     </div>
 
-                    <div class="form-group pt-3">
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            {{ __('panel.save_data') }}</button>
+                    <div class="tab-pane fade" id="SEO" role="tabpanel" aria-labelledby="SEO-tab">
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_title[{{ $key }}]">
+                                        {{ __('panel.metadata_title') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_title[{{ $key }}]"
+                                        id="metadata_title[{{ $key }}]"
+                                        value="{{ old('metadata_title.' . $key) }}" class="form-control">
+                                    @error('metadata_title.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_description[{{ $key }}]">
+                                        {{ __('panel.metadata_description') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_description[{{ $key }}]"
+                                        id="metadata_description[{{ $key }}]"
+                                        value="{{ old('metadata_description.' . $key) }}" class="form-control">
+                                    @error('metadata_description.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_keywords[{{ $key }}]">
+                                        {{ __('panel.metadata_keywords') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_keywords[{{ $key }}]"
+                                        id="metadata_keywords[{{ $key }}]"
+                                        value="{{ old('metadata_keywords.' . $key) }}" class="form-control">
+                                    @error('metadata_keywords.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3 d-none d-md-block">
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+
+                            <button type="submit" name="submit" class="btn btn-primary">
+                                <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                {{ __('panel.save_data') }}
+                            </button>
+
+                            <a href="{{ route('admin.partners.index') }}" name="submit"
+                                class=" btn btn-outline-danger">
+                                <i class="icon-lg  me-2" data-feather="x"></i>
+                                {{ __('panel.cancel') }}
+                            </a>
+
+                        </div>
                     </div>
 
                 </div>
@@ -218,37 +319,8 @@
 @endsection
 
 @section('script')
-    {{-- Call select2 plugin --}}
-    <script src="{{ asset('backend/vendor/select2/js/select2.full.min.js') }}"></script>
-
-    {{-- name counter  --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const nameInput = document.getElementById('name');
-            const charCount = document.getElementById('charCount');
-            const maxChars = 60;
-
-            // Function to update the character count
-            function updateCharCount() {
-                const remainingChars = maxChars - nameInput.value.length;
-                charCount.textContent = remainingChars;
-            }
-
-            // Initialize the character count on page load
-            updateCharCount();
-
-            // Update the character count on input
-            nameInput.addEventListener('input', updateCharCount);
-        });
-    </script>
-
-
-
-
     <script>
         $(function() {
-
-
             $("#partner_image").fileinput({
                 theme: "fa5",
                 maxFileCount: 1,
@@ -258,100 +330,30 @@
                 showUpload: false,
                 overwriteInitial: false
             })
+        });
+    </script>
 
+    <script>
+        $(function() {
+            'use strict';
 
-            $('#published_on').pickadate({
-                format: 'yyyy-mm-dd',
-                min: new Date(),
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: true, // creates a dropdown to control years
-                clear: 'Clear',
-                close: 'OK',
-                colseOnSelect: true // Close Upon Selecting a date
-            });
+            const locale = "{{ app()->getLocale() }}";
 
-            var publishedOn = $('#published_on').pickadate(
-                'picker'); // set startdate in the picker to the start date in the #start_date elemet
+            // datetime picker
+            if ($('#flatpickr-datetime').length) {
+                const defaultDate = "{{ old('published_on') }}" ?
+                    "{{ old('published_on') }}" :
+                    new Date(); // Set to now if no old date exists
 
-            // when change date 
-            $('#published_on').change(function() {
-                selected_ci_date = "";
-                selected_ci_date = $('#published_on').val();
-                if (selected_ci_date != null) {
-                    var cidate = new Date(selected_ci_date);
-                    min_codate = "";
-                    min_codate = new Date();
-                    min_codate.setDate(cidate.getDate() + 1);
-                    enddate.set('min', min_codate);
-                }
-            });
-
-            $('#published_on_time').pickatime({
-                clear: ''
-            });
-
-            // start deadline 
-            $('#deadline').pickadate({
-                format: 'yyyy-mm-dd',
-                min: new Date(),
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: true, // creates a dropdown to control years
-                clear: 'Clear',
-                close: 'OK',
-                colseOnSelect: true // Close Upon Selecting a date
-            });
-
-            var publishedOn = $('#deadline').pickadate(
-                'picker'); // set startdate in the picker to the start date in the #start_date elemet
-
-            // when change date 
-            $('#deadline').change(function() {
-                selected_ci_date = "";
-                selected_ci_date = $('#deadline').val();
-                if (selected_ci_date != null) {
-                    var cidate = new Date(selected_ci_date);
-                    min_codate = "";
-                    min_codate = new Date();
-                    min_codate.setDate(cidate.getDate() + 1);
-                    enddate.set('min', min_codate);
-                }
-
-            });
-            // end deadline 
-
-            // ======= start pickadate codeing ===========
-            $('#publish_date').pickadate({
-                format: 'yyyy-mm-dd',
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: true, // creates a dropdown to control years
-                clear: 'Clear',
-                close: 'OK',
-                colseOnSelect: true // Close Upon Selecting a date
-            });
-
-            $('#offer_ends').pickadate({
-                format: 'yyyy-mm-dd',
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: true, // creates a dropdown to control years
-                clear: 'Clear',
-                close: 'OK',
-                colseOnSelect: true // Close Upon Selecting a date
-            });
-
-
-            $('.summernote').summernote({
-                tabSize: 2,
-                height: 150,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
+                flatpickr("#flatpickr-datetime", {
+                    enableTime: true,
+                    wrap: true,
+                    dateFormat: "Y/m/d h:i K",
+                    minDate: "today", // Prevent dates before today
+                    locale: typeof flatPickrLanguage !== 'undefined' ? flatPickrLanguage : 'en',
+                    defaultDate: defaultDate,
+                });
+            }
         });
     </script>
 @endsection

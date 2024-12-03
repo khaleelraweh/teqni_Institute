@@ -9,16 +9,16 @@
                     <i class="fa fa-folder"></i>
                     {{ __('panel.manage_questions') }}
                 </h3>
-                <ul class="breadcrumb">
+                <ul class="breadcrumb pt-3">
                     <li>
                         <a href="{{ route('admin.index') }}">{{ __('panel.main') }}</a>
                         @if (config('locales.languages')[app()->getLocale()]['rtl_support'] == 'rtl')
-                            <i class="fa fa-solid fa-chevron-left chevron"></i>
+                            /
                         @else
-                            <i class="fa fa-solid fa-chevron-right chevron"></i>
+                            \
                         @endif
                     </li>
-                    <li>
+                    <li class="ms-1">
                         {{ __('panel.show_questions') }}
                     </li>
                 </ul>
@@ -51,36 +51,87 @@
                             <th>{{ __('panel.title') }}</th>
                             <th>{{ __('panel.author') }}</th>
                             <th> {{ __('panel.status') }} </th>
-                            <th> {{ __('panel.created_at') }} </th>
+                            <th> {{ __('panel.published_on') }} </th>
                             <th class="text-center" style="width:30px;">{{ __('panel.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($common_questions as $question)
+                        @forelse ($common_questions as $common_question)
                             <tr>
                                 <td>
-                                    {{ Str::limit($question->title, 50) }}
+                                    {{ Str::limit($common_question->title, 50) }}
                                 </td>
-                                <td>{{ $question->created_by }}</td>
-                                <td>{{ $question->status() }}</td>
-                                <td>{{ $question->created_at->format('Y-m-d h:i a') }}</td>
+                                <td>{{ $common_question->created_by }}</td>
+                                <td>
+                                    @if ($common_question->status == 1)
+                                        <a href="javascript:void(0);" class="updateCommonQuestionStatus "
+                                            id="common-question-{{ $common_question->id }}"
+                                            common_question_id="{{ $common_question->id }}">
+                                            <i class="fas fa-toggle-on fa-lg text-success" aria-hidden="true"
+                                                status="Active" style="font-size: 1.6em"></i>
+                                        </a>
+                                    @else
+                                        <a href="javascript:void(0);" class="updateCommonQuestionStatus"
+                                            id="common-question-{{ $common_question->id }}"
+                                            common_question_id="{{ $common_question->id }}">
+                                            <i class="fas fa-toggle-off fa-lg text-warning" aria-hidden="true"
+                                                status="Inactive" style="font-size: 1.6em"></i>
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($common_question->published_on)->diffForHumans() }}
+                                </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('admin.common_questions.edit', $question->id) }}"
-                                            class="btn btn-primary">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a href="javascript:void(0);"
-                                            onclick=" if( confirm('{{ __('panel.confirm_delete_message') }}') ){document.getElementById('delete-question-{{ $question->id }}').submit();}else{return false;}"
-                                            class="btn btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <div class="dropdown mb-2 ">
+                                            <a type="button" class="d-flex" id="dropdownMenuButton"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-lg text-muted pb-3px" data-feather="more-vertical"></i>
+                                                {{ __('panel.operation_options') }}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                    viewBox="0 0 25 15" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-chevron-down link-arrow">
+                                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item d-flex align-items-center"
+                                                    href="{{ route('admin.common_questions.edit', $common_question->id) }}">
+                                                    <i data-feather="edit-2" class="icon-sm me-2"></i>
+                                                    <span class="">{{ __('panel.operation_edit') }}</span>
+                                                </a>
+
+                                                <a href="javascript:void(0);"
+                                                    onclick="confirmDelete('delete-common_question-{{ $common_question->id }}', '{{ __('panel.confirm_delete_message') }}', '{{ __('panel.yes_delete') }}', '{{ __('panel.cancel') }}')"
+                                                    class="dropdown-item d-flex align-items-center">
+                                                    <i data-feather="trash" class="icon-sm me-2"></i>
+                                                    <span class="">{{ __('panel.operation_delete') }}</span>
+                                                </a>
+                                                <form
+                                                    action="{{ route('admin.common_questions.destroy', $common_question->id) }}"
+                                                    method="post" class="d-none"
+                                                    id="delete-common_question-{{ $common_question->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+
+                                                <a href="javascript:void(0);"
+                                                    class="dropdown-item d-flex align-items-center btn btn-success copyButton"
+                                                    data-copy-text="https://ibbuniv.era-t.com/common_questions/{{ $common_question->slug }}"
+                                                    data-id="{{ $common_question->id }}" title="Copy the link">
+                                                    <i data-feather="copy" class="icon-sm me-2"></i>
+                                                    <span class="">{{ __('panel.operation_copy_link') }}</span>
+                                                </a>
+
+                                            </div>
+                                            <span class="copyMessage" data-id="{{ $common_question->id }}"
+                                                style="display:none;">
+                                                {{ __('panel.copied') }}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <form action="{{ route('admin.common_questions.destroy', $question->id) }}"
-                                        method="post" class="d-none" id="delete-question-{{ $question->id }}">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
                                 </td>
                             </tr>
                         @empty

@@ -36,361 +36,524 @@
         {{-- body part  --}}
         <div class="card-body">
 
-            {{-- erorrs show is exists --}}
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger pt-0 pb-0 mb-0">
+                        <ul class="px-2 py-3 m-0" style="list-style-type: circle">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-            {{-- enctype used cause we will save images  --}}
-            <form action="{{ route('admin.advertisor_sliders.update', $advertisorSlider->id) }}" method="post"
-                enctype="multipart/form-data">
-                @csrf
-                @method('PATCH')
+                {{-- enctype used cause we will save images  --}}
+                <form action="{{ route('admin.advertisor_sliders.update', $advertisorSlider->id) }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
 
-                {{-- links of tabs --}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    @foreach (config('locales.languages') as $key => $val)
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ $loop->index == 0 ? 'active' : '' }}" id="{{ $key }}-tab"
-                                data-bs-toggle="tab" data-bs-target="#{{ $key }}" type="button" role="tab"
-                                aria-controls="{{ $key }}" aria-selected="true">
-                                {{ __('panel.content_tab') }} {{ __('panel.in') }} ({{ __('panel.' . $key) }})
+                            <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
+                                type="button" role="tab" aria-controls="content"
+                                aria-selected="true">{{ __('panel.content_tab') }}
                             </button>
                         </li>
-                    @endforeach
 
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url" type="button"
-                            role="tab" aria-controls="url" aria-selected="true">{{ __('panel.url_tab') }}
-                        </button>
-                    </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url"
+                                type="button" role="tab" aria-controls="url"
+                                aria-selected="true">{{ __('panel.operation_options') }}
+                            </button>
+                        </li>
 
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="published-tab" data-bs-toggle="tab" data-bs-target="#published"
-                            type="button" role="tab" aria-controls="published"
-                            aria-selected="false">{{ __('panel.published_tab') }}
-                        </button>
-                    </li>
 
-                </ul>
 
-                <div class="tab-content" id="myTabContent">
-                    {{-- Content Tab --}}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="SEO-tab" data-bs-toggle="tab" data-bs-target="#SEO"
+                                type="button" role="tab" aria-controls="SEO"
+                                aria-selected="false">{{ __('panel.SEO_tab') }}
+                            </button>
+                        </li>
 
-                    @foreach (config('locales.languages') as $key => $val)
-                        <div class="tab-pane fade {{ $loop->index == 0 ? 'show active' : '' }}" id="{{ $key }}"
-                            role="tabpanel" aria-labelledby="{{ $key }}">
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+
+
+                        <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-2 pt-3">
+                                        <label for="title[{{ $key }}]">
+                                            {{ __('panel.title') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-10 pt-3">
+                                        <input type="text" name="title[{{ $key }}]"
+                                            id="title[{{ $key }}]"
+                                            value="{{ old('title.' . $key, $advertisorSlider->getTranslation('title', $key)) }}"
+                                            class="form-control">
+                                        @error('title.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-2 pt-3">
+                                        <label for="subtitle[{{ $key }}]">
+                                            {{ __('panel.subtitle') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    subtitle="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-10 pt-3">
+                                        <input type="text" name="subtitle[{{ $key }}]"
+                                            id="subtitle[{{ $key }}]"
+                                            value="{{ old('subtitle.' . $key, $advertisorSlider->getTranslation('subtitle', $key)) }}"
+                                            class="form-control">
+                                        @error('subtitle.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-2 pt-3">
+                                        <label for="description[{{ $key }}]">
+                                            {{ __('panel.f_description') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-10 pt-3">
+                                        <textarea id="tinymceExample" name="description[{{ $key }}]" rows="10" class="form-control ">{!! old('description.' . $key, $advertisorSlider->getTranslation('description', $key)) !!}</textarea>
+                                        @error('description.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
 
                             <div class="row">
-
-                                {{-- البيانات الاساسية --}}
-                                <div class=" {{ $loop->index == 0 ? 'col-md-7' : '' }} col-sm-12 ">
-
-                                    @if ($loop->first)
-                                        <div class="row ">
-                                            <div class="col-sm-12 pt-3">
-                                                <div class="form-group">
-                                                    <label for="icon"> {{ __('panel.choose_icon') }} </label>
-
-                                                    <div class="input-group iconpicker-container ">
-                                                        <input data-placement="bottomRight"
-                                                            class="form-control icp icp-auto iconpicker-element iconpicker-input icon-picker form-control"
-                                                            value=" {{ old('icon', $advertisorSlider->icon) ?? 'fas fa-archive' }}"
-                                                            type="text" name="icon">
-                                                        <span class="input-group-addon btn btn-primary">
-                                                            <i
-                                                                class="{{ $advertisorSlider->icon ?? 'fas fa-archive' }}"></i>
-                                                        </span>
-                                                    </div>
-
-                                                    @error('icon')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    {{-- slider title field --}}
-                                    <div class="row ">
-                                        <div class="col-sm-12 pt-3">
-                                            <div class="form-group">
-                                                <label for="title[{{ $key }}]">
-                                                    {{ __('panel.title') }}
-                                                    {{ __('panel.in') }} {{ __('panel.' . $key) }}
-                                                </label>
-                                                <input type="text" name="title[{{ $key }}]"
-                                                    id="title[{{ $key }}]"
-                                                    value="{{ old('title.' . $key, $advertisorSlider->getTranslation('title', $key)) }}"
-                                                    class="form-control">
-                                                @error('title.' . $key)
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {{-- slider subtitle field --}}
-                                    <div class="row ">
-                                        <div class="col-sm-12 pt-3">
-                                            <div class="form-group">
-                                                <label for="subtitle[{{ $key }}]">
-                                                    {{ __('panel.subtitle') }}
-                                                    {{ __('panel.in') }} {{ __('panel.' . $key) }}
-                                                </label>
-                                                <input type="text" name="subtitle[{{ $key }}]"
-                                                    id="subtitle[{{ $key }}]"
-                                                    value="{{ old('subtitle.' . $key, $advertisorSlider->getTranslation('subtitle', $key)) }}"
-                                                    class="form-control">
-                                                @error('subtitle.' . $key)
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {{--  description field --}}
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-12 pt-4">
-                                            <label for="description[{{ $key }}]">
-                                                {{ __('panel.description') }}
-                                                {{ __('panel.in') }} {{ __('panel.' . $key) }}
-                                            </label>
-                                            <textarea name="description[{{ $key }}]" rows="10" class="form-control" id="tinymceExample">{!! old('description.' . $key, $advertisorSlider->getTranslation('description', $key)) !!}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- مرفق الصور  --}}
-                                <div class=" {{ $loop->index == 0 ? 'col-md-5' : 'd-none' }}  col-sm-12 ">
-
-                                    <div class="row pt-4">
-                                        <div class="col-12">
-                                            <label for="images">{{ __('panel.image') }}/
-                                                {{ __('panel.images') }}
-                                                <span><small> ( {{ __('panel.best_size') }}: 1920 * 960 )</small></span>
-
-                                            </label>
-
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="images">
+                                        {{ __('panel.image') }} / {{ __('panel.images') }}
+                                        <span>
                                             <br>
-                                            <div class="file-loading">
-                                                <input type="file" name="images[]" id="slider_images"
-                                                    class="file-input-overview" multiple="multiple">
-                                                @error('images')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                            <small> {{ __('panel.best_size') }}</small>
+                                            <small> 350 * 250</small>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <div class="file-loading">
+                                        <input type="file" name="images[]" id="slider_images"
+                                            class="file-input-overview" multiple="multiple">
+                                        @error('images')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        {{-- url Tab --}}
+                        <div class="tab-pane fade" id="url" role="tabpanel" aria-labelledby="url-tab">
+
+                            <fieldset class="p-3 my-3" style="border: 1px solid #eee;">
+                                <legend>{{ __('panel.browse_button_options') }}</legend>
+                                @foreach (config('locales.languages') as $key => $val)
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-md-3 pt-3">
+                                            <label for="btn_title[{{ $key }}]">
+                                                {{ __('panel.browse_button_title') }}
+                                                <span class="language-type">
+                                                    <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                        title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                    {{ __('panel.' . $key) }}
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-12 col-md-9 pt-3">
+                                            <input type="text" name="btn_title[{{ $key }}]"
+                                                id="btn_title[{{ $key }}]"
+                                                value="{{ old('btn_title.' . $key, $advertisorSlider->getTranslation('btn_title', $key)) }}"
+                                                class="form-control">
+                                            @error('btn_title.' . $key)
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
+                                @endforeach
 
-                                </div>
-
-                            </div>
-                        </div>
-                    @endforeach
-
-                    {{-- url Tab --}}
-                    <div class="tab-pane fade" id="url" role="tabpanel" aria-labelledby="url-tab">
-
-
-                        {{-- url browse button link --}}
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 pt-4">
-                                <label for="btn_title">{{ __('panel.browse_button_title') }}</label>
-                                <input type="text" name="btn_title" id="btn_title"
-                                    value="{{ old('btn_title', $advertisorSlider->btn_title) }}" class="form-control"
-                                    placeholder="">
-                                @error('btn_title')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- url fields --}}
-                        <div class="row">
-                            {{-- url field --}}
-                            <div class="col-md-12 col-sm-12 pt-4">
-                                <label for="url">{{ __('panel.url_link') }}</label>
-                                <input type="text" name="url" id="url"
-                                    value="{{ old('url', $advertisorSlider->url) }}" class="form-control"
-                                    placeholder="http://youtlinks.com ">
-                                @error('url')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{--  target  fields --}}
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4 pt-4">
-                                <label for="target">{{ __('panel.url_target') }} </label>
-                                <select name="target" class="form-control">
-                                    <option value="_self"
-                                        {{ old('target', $advertisorSlider->target) == '_self' ? 'selected' : null }}>
-                                        {{ __('panel.in_the_same_tab') }}
-                                    </option>
-                                    <option value="_blank"
-                                        {{ old('target', $advertisorSlider->target) == '_blank' ? 'selected' : null }}>
-                                        {{ __('panel.in_new_tab') }}
-                                    </option>
-                                </select>
-                                @error('target')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- show info field --}}
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4">
-                                <label for="show_btn_title">{{ __('panel.show_browsing_button') }}</label>
-                                <select name="show_btn_title" class="form-control">
-                                    <option value="1"
-                                        {{ old('show_btn_title', $advertisorSlider->show_btn_title) == '1' ? 'selected' : null }}>
-                                        {{ __('panel.yes') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('show_btn_title', $advertisorSlider->show_btn_title) == '0' ? 'selected' : null }}>
-                                        {{ __('panel.no') }}
-                                    </option>
-                                </select>
-                                @error('show_btn_title')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
-
-                    {{-- Published Tab --}}
-                    <div class="tab-pane fade" id="published" role="tabpanel" aria-labelledby="published-tab">
-
-                        {{-- published_on   --}}
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4">
-                                <div class="form-group">
-                                    <label for="published_on"> {{ __('panel.published_date') }}</label>
-                                    <div class="input-group flatpickr" id="flatpickr-datetime">
-                                        <input type="text" name="published_on" class="form-control"
-                                            placeholder="Select date" data-input
-                                            value="{{ old('published_on', Carbon::parse($advertisorSlider->published_on)->format('Y/m/d h:i A')) }}">
-                                        <span class="input-group-text input-group-addon" data-toggle>
-                                            <i data-feather="calendar"></i>
-                                        </span>
+                                @foreach (config('locales.languages') as $key => $val)
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-md-3 pt-3">
+                                            <label for="url[{{ $key }}]">
+                                                {{ __('panel.url_link') }}
+                                                <span class="language-type">
+                                                    <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                        title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                    {{ __('panel.' . $key) }}
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-12 col-md-9 pt-3">
+                                            <input type="text" name="url[{{ $key }}]"
+                                                id="url[{{ $key }}]"
+                                                value="{{ old('url.' . $key, $advertisorSlider->getTranslation('url', $key)) }}"
+                                                class="form-control">
+                                            @error('url.' . $key)
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    @error('published_on')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                @endforeach
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="show_btn_title" class="control-label">
+                                            <span>{{ __('panel.url_target') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="target"
+                                                id="target_active" value="1"
+                                                {{ old('target', $advertisorSlider->target) == '1' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="target_active">
+                                                {{ __('panel.in_the_same_tab') }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="target"
+                                                id="target_inactive" value="0"
+                                                {{ old('target', $advertisorSlider->target) == '0' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="target_inactive">
+                                                {{ __('panel.in_new_tab') }}
+                                            </label>
+                                        </div>
+                                        @error('target')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="show_btn_title" class="control-label">
+                                            <span>{{ __('panel.show_browsing_button') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="show_btn_title"
+                                                id="show_btn_title_active" value="1"
+                                                {{ old('show_btn_title', $advertisorSlider->show_btn_title) == '1' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="show_btn_title_active">
+                                                {{ __('panel.yes') }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="show_btn_title"
+                                                id="show_btn_title_inactive" value="0"
+                                                {{ old('show_btn_title', $advertisorSlider->show_btn_title) == '0' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="show_btn_title_inactive">
+                                                {{ __('panel.no') }}
+                                            </label>
+                                        </div>
+                                        @error('show_btn_title')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset class="p-3 my-3" style="border: 1px solid #eee;">
+                                <legend>{{ __('panel.publishing_options') }}</legend>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        {{ __('panel.published_on') }}
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="input-group flatpickr" id="flatpickr-datetime">
+                                            <input type="text" name="published_on" class="form-control"
+                                                placeholder="Select date" data-input
+                                                value="{{ old('published_on', $advertisorSlider->published_on ? \Carbon\Carbon::parse($advertisorSlider->published_on)->format('Y/m/d h:i A') : '') }}">
+                                            <span class="input-group-text input-group-addon" data-toggle>
+                                                <i data-feather="calendar"></i>
+                                            </span>
+                                        </div>
+                                        @error('published_on')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="status" class="control-label">
+                                            <span>{{ __('panel.status') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="status"
+                                                id="status_active" value="1"
+                                                {{ old('status', $advertisorSlider->status) == '1' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="status_active">
+                                                {{ __('panel.status_active') }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="status"
+                                                id="status_inactive" value="0"
+                                                {{ old('status', $advertisorSlider->status) == '0' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="status_inactive">
+                                                {{ __('panel.status_inactive') }}
+                                            </label>
+                                        </div>
+                                        @error('status')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="p-3 my-3" style="border: 1px solid #eee">
+                                <legend>{{ __('panel.slide_detail_options') }}</legend>
+
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="show_info" class="control-label">
+                                            <span>{{ __('panel.choose_icon') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="input-group iconpicker-container ">
+                                            <input data-placement="bottomRight"
+                                                class="form-control icp icp-auto iconpicker-element iconpicker-input icon-picker form-control"
+                                                value=" {{ old('icon', $advertisorSlider->icon) ?? 'fas fa-archive' }}"
+                                                type="text" name="icon">
+                                            <span class="input-group-addon btn btn-primary">
+                                                <i class="{{ $advertisorSlider->icon ?? 'fas fa-archive' }}"></i>
+                                            </span>
+                                        </div>
+
+                                        @error('icon')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="show_info" class="control-label">
+                                            <span>{{ __('panel.show_slider_info') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="show_info"
+                                                id="show_info_active" value="1"
+                                                {{ old('show_info', $advertisorSlider->show_info) == '1' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="show_info_active">
+                                                {{ __('panel.yes') }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" class="form-check-input" name="show_info"
+                                                id="show_info_inactive" value="0"
+                                                {{ old('show_info', $advertisorSlider->show_info) == '0' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="show_info_inactive">
+                                                {{ __('panel.no') }}
+                                            </label>
+                                        </div>
+                                        @error('show_info')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+
+                        </div>
+
+                        <div class="tab-pane fade" id="SEO" role="tabpanel" aria-labelledby="SEO-tab">
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_title[{{ $key }}]">
+                                            {{ __('panel.metadata_title') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_title[{{ $key }}]"
+                                            id="metadata_title[{{ $key }}]"
+                                            value="{{ old('metadata_title.' . $key, $advertisorSlider->getTranslation('metadata_title', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_title.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_description[{{ $key }}]">
+                                            {{ __('panel.metadata_description') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_description[{{ $key }}]"
+                                            id="metadata_description[{{ $key }}]"
+                                            value="{{ old('metadata_description.' . $key, $advertisorSlider->getTranslation('metadata_description', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_description.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_keywords[{{ $key }}]">
+                                            {{ __('panel.metadata_keywords') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_keywords[{{ $key }}]"
+                                            id="metadata_keywords[{{ $key }}]"
+                                            value="{{ old('metadata_keywords.' . $key, $advertisorSlider->getTranslation('metadata_keywords', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_keywords.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 pt-3">
-                                <label for="status" class="control-label col-md-2 col-sm-12 ">
-                                    <span>{{ __('panel.status') }}</span>
-                                </label>
-                                <select name="status" class="form-control">
-                                    <option value="1"
-                                        {{ old('status', $advertisorSlider->status) == '1' ? 'selected' : null }}>
-                                        {{ __('panel.status_active') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('status', $advertisorSlider->status) == '0' ? 'selected' : null }}>
-                                        {{ __('panel.status_inactive') }}
-                                    </option>
-                                </select>
-                                @error('status')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <div class="col-sm-12 col-md-3 pt-3 d-none d-md-block">
+                            </div>
+                            <div class="col-sm-12 col-md-9 pt-3">
+                                <button type="submit" name="submit" class="btn btn-primary">
+                                    <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                    {{ __('panel.update_data') }}
+                                </button>
+
+                                <a href="{{ route('admin.advertisor_sliders.index') }}" name="submit"
+                                    class=" btn btn-outline-danger">
+                                    <i class="icon-lg  me-2" data-feather="x"></i>
+                                    {{ __('panel.cancel') }}
+                                </a>
+
                             </div>
                         </div>
-
-                        {{-- show info field --}}
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4">
-                                <label for="show_info">{{ __('panel.show_slider_info') }}</label>
-                                <select name="show_info" class="form-control">
-                                    <option value="1"
-                                        {{ old('show_info', $advertisorSlider->show_info) == '1' ? 'selected' : null }}>
-                                        {{ __('panel.yes') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('show_info', $advertisorSlider->show_info) == '0' ? 'selected' : null }}>
-                                        {{ __('panel.no') }}
-                                    </option>
-                                </select>
-                                @error('show_info')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
                     </div>
 
+                </form>
+            </div>
 
-                    <div class="form-group pt-4">
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            {{ __('panel.update_data') }}
-                        </button>
-                    </div>
-                </div>
-
-            </form>
         </div>
 
-    </div>
+    @endsection
 
-@endsection
+    @section('script')
+        <script>
+            $(function() {
 
-@section('script')
-    <script>
-        $(function() {
+                $("#slider_images").fileinput({
+                    theme: "fa5",
+                    maxFileCount: 5,
+                    allowedFileTypes: ['image'],
+                    showCancel: true,
+                    showRemove: false,
+                    showUpload: false,
+                    overwriteInitial: false,
+                    // اضافات للتعامل مع الصورة عند التعديل علي احد اقسام المنتجات
+                    // delete images from photos and assets/sliders 
+                    // because there are maybe more than one image we will go for each image and show them in the edit page 
+                    initialPreview: [
+                        @if ($advertisorSlider->photos()->count() > 0)
+                            @foreach ($advertisorSlider->photos as $media)
+                                "{{ asset('assets/advertisor_sliders/' . $media->file_name) }}",
+                            @endforeach
+                        @endif
+                    ],
+                    initialPreviewAsData: true,
+                    initialPreviewFileType: 'image',
+                    initialPreviewConfig: [
+                        @if ($advertisorSlider->photos()->count() > 0)
+                            @foreach ($advertisorSlider->photos as $media)
+                                {
+                                    caption: "{{ $media->file_name }}",
+                                    size: '{{ $media->file_size }}',
+                                    width: "120px",
+                                    // url : الراوت المستخدم لحذف الصورة
+                                    url: "{{ route('admin.advertisor_sliders.remove_image', ['image_id' => $media->id, 'slider_id' => $advertisorSlider->id, '_token' => csrf_token()]) }}",
+                                    key: {{ $media->id }}
+                                },
+                            @endforeach
+                        @endif
 
-            $("#slider_images").fileinput({
-                theme: "fa5",
-                maxFileCount: 5,
-                allowedFileTypes: ['image'],
-                showCancel: true,
-                showRemove: false,
-                showUpload: false,
-                overwriteInitial: false,
-                // اضافات للتعامل مع الصورة عند التعديل علي احد اقسام المنتجات
-                // delete images from photos and assets/sliders 
-                // because there are maybe more than one image we will go for each image and show them in the edit page 
-                initialPreview: [
-                    @if ($advertisorSlider->photos()->count() > 0)
-                        @foreach ($advertisorSlider->photos as $media)
-                            "{{ asset('assets/advertisor_sliders/' . $media->file_name) }}",
-                        @endforeach
-                    @endif
-                ],
-                initialPreviewAsData: true,
-                initialPreviewFileType: 'image',
-                initialPreviewConfig: [
-                    @if ($advertisorSlider->photos()->count() > 0)
-                        @foreach ($advertisorSlider->photos as $media)
-                            {
-                                caption: "{{ $media->file_name }}",
-                                size: '{{ $media->file_size }}',
-                                width: "120px",
-                                // url : الراوت المستخدم لحذف الصورة
-                                url: "{{ route('admin.advertisor_sliders.remove_image', ['image_id' => $media->id, 'slider_id' => $advertisorSlider->id, '_token' => csrf_token()]) }}",
-                                key: {{ $media->id }}
-                            },
-                        @endforeach
-                    @endif
-
-                ]
-            }).on('filesorted', function(event, params) {
-                console.log(params.previewId, params.oldIndex, params.newIndex, params.stack);
+                    ]
+                }).on('filesorted', function(event, params) {
+                    console.log(params.previewId, params.oldIndex, params.newIndex, params.stack);
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

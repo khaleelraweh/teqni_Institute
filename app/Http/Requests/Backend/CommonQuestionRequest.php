@@ -31,8 +31,7 @@ class CommonQuestionRequest extends FormRequest
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'                      =>  'required',
                         'views'              =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -49,8 +48,7 @@ class CommonQuestionRequest extends FormRequest
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'                      =>  'required',
                         'views'              =>  'nullable',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
@@ -63,5 +61,22 @@ class CommonQuestionRequest extends FormRequest
             default:
                 break;
         }
+    }
+
+    public function attributes(): array
+    {
+        $attr = [
+            'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
+        ];
+
+        foreach (config('locales.languages') as $key => $val) {
+            $attr += ['title.' . $key       =>  "( " . __('panel.title')   . ' ' . __('panel.in') . ' ' . __('panel.' . $val['lang'])   . " )",];
+            $attr += ['description.' . $key       =>  "( " . __('panel.description')   . ' ' . __('panel.in') . ' ' . __('panel.' . $val['lang'])   . " )",];
+        }
+
+
+        return $attr;
     }
 }

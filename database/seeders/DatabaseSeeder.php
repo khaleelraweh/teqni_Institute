@@ -27,16 +27,15 @@ class DatabaseSeeder extends Seeder
         $this->call(MainSliderSeeder::class);
         $this->call(AdvSliderSeeder::class);
 
-        $this->call(PartnerSeeder::class);
-        $this->call(PresidentSpeechSeeder::class);
-        $this->call(CommonQuestionSeeder::class);
-
-        $this->call(WebMenuSeeder::class); // section 1
-        $this->call(CollegeMenuSeeder::class); //section 2
+        $this->call(MainMenuSeeder::class); // section 1
+        $this->call(AcademicProgramMenuSeeder::class); //section 2
         $this->call(TopicsMenuSeeder::class); // section 3
         $this->call(TracksMenuSeeder::class); //section 4
         $this->call(SupportMenuSeeder::class); //section 5
         $this->call(CompanyMenuSeeder::class); // section 6
+        $this->call(ImportantLinkMenuSeeder::class); // section 7
+        $this->call(ContactUsMenuSeeder::class); // section 8
+        $this->call(PoliciesPrivacyMenuSeeder::class); // section 9
 
         $this->call(PageCategorySeeder::class);
         $this->call(PageSeeder::class);
@@ -50,5 +49,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PlaylistSeeder::class);
 
         $this->call(StatisticSeeder::class);
+
+        $this->call(PresidentSpeechSeeder::class);
+        $this->call(PartnerSeeder::class);
     }
 }

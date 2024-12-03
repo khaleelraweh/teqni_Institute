@@ -12,16 +12,16 @@
                     <i class="fa fa-edit"></i>
                     {{ __('panel.edit_existing_company_menu_link') }}
                 </h3>
-                <ul class="breadcrumb">
+                <ul class="breadcrumb pt-3">
                     <li>
                         <a href="{{ route('admin.index') }}">{{ __('panel.main') }}</a>
                         @if (config('locales.languages')[app()->getLocale()]['rtl_support'] == 'rtl')
-                            <i class="fa fa-solid fa-chevron-left chevron"></i>
+                            /
                         @else
-                            <i class="fa fa-solid fa-chevron-right chevron"></i>
+                            \
                         @endif
                     </li>
-                    <li>
+                    <li class="ms-1">
                         <a href="{{ route('admin.company_menus.index') }}">
                             {{ __('panel.show_company_menus') }}
                         </a>
@@ -33,77 +33,57 @@
         {{-- body part  --}}
         <div class="card-body">
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger pt-0 pb-0 mb-0">
+                        <ul class="px-2 py-3 m-0" style="list-style-type: circle">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('admin.company_menus.update', $companyMenu->id) }}" method="post">
+                    @csrf
+                    @method('PATCH')
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
+                                type="button" role="tab" aria-controls="content"
+                                aria-selected="true">{{ __('panel.content_tab') }}</button>
+                        </li>
+
+
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="SEO-tab" data-bs-toggle="tab" data-bs-target="#SEO"
+                                type="button" role="tab" aria-controls="SEO"
+                                aria-selected="false">{{ __('panel.SEO_tab') }}
+                            </button>
+                        </li>
+
                     </ul>
-                </div>
-            @endif
 
-            <form action="{{ route('admin.company_menus.update', $companyMenu->id) }}" method="post">
-                @csrf
-                @method('PATCH')
+                    <div class="tab-content" id="myTabContent">
 
-                {{-- links of tabs --}}
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
-                            type="button" role="tab" aria-controls="content"
-                            aria-selected="true">{{ __('panel.content_tab') }}
-                        </button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="published-tab" data-bs-toggle="tab" data-bs-target="#published"
-                            type="button" role="tab" aria-controls="published"
-                            aria-selected="false">{{ __('panel.published_tab') }}
-                        </button>
-                    </li>
-                </ul>
-
-                {{-- contents of links tabs  --}}
-                <div class="tab-content" id="myTabContent">
-
-                    {{-- تاب بيانات المحتوي --}}
-                    <div class="tab-pane fade active show" id="content" role="tabpanel" aria-labelledby="content-tab">
+                        <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
 
 
 
-                        <div class="row ">
-                            <div class="col-sm-12 pt-3">
-                                <div class="form-group">
-                                    <label for="icon"> {{ __('panel.choose_icon') }} </label>
-                                    <div class="input-group iconpicker-container ">
-                                        <input type="hidden" name="section" value="2">
-                                        <input data-placement="bottomRight"
-                                            class="form-control icp icp-auto iconpicker-element iconpicker-input icon-picker form-control"
-                                            name="icon"
-                                            value="{{ old('icon', $companyMenu->icon) ?? 'fas fa-archive' }}"
-                                            type="text">
-                                        <span class="input-group-addon btn btn-primary">
-                                            <i class="{{ $webMenu->companyMenu ?? 'fas fa-archive' }}"></i>
-                                        </span>
-                                    </div>
-
-                                    @error('icon')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row ">
                             @foreach (config('locales.languages') as $key => $val)
-                                <div class="col-sm-12 col-md-6 pt-3">
-                                    <div class="form-group">
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-3 pt-3">
                                         <label for="title[{{ $key }}]">
                                             {{ __('panel.title') }}
-                                            {{ __('panel.in') }}
-                                            {{ __('panel.' . $key) }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
                                         </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
                                         <input type="text" name="title[{{ $key }}]"
                                             id="title[{{ $key }}]"
                                             value="{{ old('title.' . $key, $companyMenu->getTranslation('title', $key)) }}"
@@ -111,23 +91,48 @@
                                         @error('title.' . $key)
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
 
 
-                        <div class="row ">
                             @foreach (config('locales.languages') as $key => $val)
-                                <div class="col-sm-12 col-md-6 pt-3">
-                                    <div class="form-group">
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="description[{{ $key }}]">
+                                            {{ __('panel.f_description') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <textarea id="tinymceExample" name="description[{{ $key }}]" rows="10" class="form-control ">{!! old('description.' . $key, $companyMenu->getTranslation('description', $key)) !!}</textarea>
+                                        @error('description.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-3 pt-3">
                                         <label for="link[{{ $key }}]">
                                             {{ __('panel.link') }}
-                                            {{ __('panel.in') }}
-                                            {{ __('panel.' . $key) }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
                                         </label>
-                                        <input type="text" id="link[{{ $key }}]"
-                                            name="link[{{ $key }}]"
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="link[{{ $key }}]"
+                                            id="link[{{ $key }}]"
                                             value="{{ old('link.' . $key, $companyMenu->getTranslation('link', $key)) }}"
                                             class="form-control">
                                         @error('link.' . $key)
@@ -136,34 +141,75 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
 
-                    </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="icon" class="control-label">
+                                        <span>{{ __('panel.choose_icon') }}</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <div class="input-group iconpicker-container ">
+                                        <input data-placement="bottomRight"
+                                            class="form-control icp icp-auto iconpicker-element iconpicker-input icon-picker form-control"
+                                            value=" {{ old('icon', $companyMenu->icon) ?? 'fas fa-archive' }}"
+                                            type="text" name="icon">
+                                        <span class="input-group-addon btn btn-primary">
+                                            <i class="{{ $companyMenu->icon ?? 'fas fa-archive' }}"></i>
+                                        </span>
+                                    </div>
+                                    @error('icon')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
-                    {{-- تاب بيانات النشر --}}
-                    <div class="tab-pane fade" id="published" role="tabpanel" aria-labelledby="published-tab">
-                        <div class="row">
-                            <div class="col-sm-12  pt-4">
-                                <div class="form-group">
-                                    <label for="published_on">{{ __('panel.published_date') }}</label>
-                                    <input type="text" id="published_on" name="published_on"
-                                        value="{{ old('published_on', \Carbon\Carbon::parse($companyMenu->published_on)->Format('Y-m-d')) }}"
-                                        class="form-control">
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    {{ __('panel.published_on') }}
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <div class="input-group flatpickr" id="flatpickr-datetime">
+                                        <input type="text" name="published_on" class="form-control"
+                                            placeholder="Select date" data-input
+                                            value="{{ old('published_on', $companyMenu->published_on ? \Carbon\Carbon::parse($companyMenu->published_on)->format('Y/m/d h:i A') : '') }}">
+                                        <span class="input-group-text input-group-addon" data-toggle>
+                                            <i data-feather="calendar"></i>
+                                        </span>
+                                    </div>
                                     @error('published_on')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-12  pt-4">
-                                <div class="form-group">
-                                    <label for="published_on_time">{{ __('panel.published_time') }}</label>
-                                    <input type="text" id="published_on_time" name="published_on_time"
-                                        value="{{ old('published_on_time', \Carbon\Carbon::parse($companyMenu->published_on)->Format('h:i A')) }}"
-                                        class="form-control">
-                                    @error('published_on_time')
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="status" class="control-label">
+                                        <span>{{ __('panel.status') }}</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" name="status" id="status_active"
+                                            value="1"
+                                            {{ old('status', $companyMenu->status) == '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="status_active">
+                                            {{ __('panel.status_active') }}
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" name="status"
+                                            id="status_inactive" value="0"
+                                            {{ old('status', $companyMenu->status) == '0' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="status_inactive">
+                                            {{ __('panel.status_inactive') }}
+                                        </label>
+                                    </div>
+                                    @error('status')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -171,79 +217,140 @@
 
                         </div>
 
-                        {{-- حالة التصنيف --}}
-                        <div class="row ">
+                        <div class="tab-pane fade" id="SEO" role="tabpanel" aria-labelledby="SEO-tab">
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_title[{{ $key }}]">
+                                            {{ __('panel.metadata_title') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_title[{{ $key }}]"
+                                            id="metadata_title[{{ $key }}]"
+                                            value="{{ old('metadata_title.' . $key, $companyMenu->getTranslation('metadata_title', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_title.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
 
-                            <div class="col-md-12 col-sm-12 pt-4">
-                                <label for="status" class="control-label">
-                                    <span>{{ __('panel.status') }}</< /span>
-                                </label>
-                                <select name="status" class="form-control">
-                                    <option value="">---</option>
-                                    <option value="1"
-                                        {{ old('status', $companyMenu->status) == '1' ? 'selected' : null }}>
-                                        {{ __('panel.status_active') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('status', $companyMenu->status) == '0' ? 'selected' : null }}>
-                                        {{ __('panel.status_inactive') }}
-                                    </option>
-                                </select>
-                                @error('status')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_description[{{ $key }}]">
+                                            {{ __('panel.metadata_description') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_description[{{ $key }}]"
+                                            id="metadata_description[{{ $key }}]"
+                                            value="{{ old('metadata_description.' . $key, $companyMenu->getTranslation('metadata_description', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_description.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <hr>
+
+                            @foreach (config('locales.languages') as $key => $val)
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-3 pt-3">
+                                        <label for="metadata_keywords[{{ $key }}]">
+                                            {{ __('panel.metadata_keywords') }}
+                                            <span class="language-type">
+                                                <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                    title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                                {{ __('panel.' . $key) }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12 col-md-9 pt-3">
+                                        <input type="text" name="metadata_keywords[{{ $key }}]"
+                                            id="metadata_keywords[{{ $key }}]"
+                                            value="{{ old('metadata_keywords.' . $key, $companyMenu->getTranslation('metadata_keywords', $key)) }}"
+                                            class="form-control">
+                                        @error('metadata_keywords.' . $key)
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3 pt-3 d-none d-md-block">
+                            </div>
+                            <div class="col-sm-12 col-md-9 pt-3">
+                                <button type="submit" name="submit" class="btn btn-primary">
+                                    <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                    {{ __('panel.update_data') }}
+                                </button>
+
+                                <a href="{{ route('admin.company_menus.index') }}" name="submit"
+                                    class=" btn btn-outline-danger">
+                                    <i class="icon-lg  me-2" data-feather="x"></i>
+                                    {{ __('panel.cancel') }}
+                                </a>
+
                             </div>
                         </div>
 
                     </div>
 
-                </div>
 
+                </form>
+            </div>
 
-                {{-- submit part --}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group pt-3 mx-3">
-                            <button type="submit" name="submit" class="btn btn-primary">
-                                {{ __('panel.update_data') }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
-
-    </div>
-@endsection
+    @endsection
 
 
-@section('script')
-    <script>
-        $(function() {
+    @section('script')
+        <script>
+            $(function() {
 
-            $('#published_on').pickadate({
-                format: 'yyyy-mm-dd',
-                min: new Date(),
-                selectMonths: true,
-                selectYears: true,
-                clear: 'Clear',
-                close: 'OK',
-                colseOnSelect: true
+                $('#published_on').pickadate({
+                    format: 'yyyy-mm-dd',
+                    min: new Date(),
+                    selectMonths: true,
+                    selectYears: true,
+                    clear: 'Clear',
+                    close: 'OK',
+                    colseOnSelect: true
+                });
+
+                var publishedOn = $('#published_on').pickadate(
+                    'picker');
+
+                $('#published_on').change(function() {
+                    selected_ci_date = "";
+                    selected_ci_date = now() // make selected start date in picker = start_date value  
+
+                });
+
+                $('#published_on_time').pickatime({
+                    clear: ''
+                });
+
             });
-
-            var publishedOn = $('#published_on').pickadate(
-                'picker');
-
-            $('#published_on').change(function() {
-                selected_ci_date = "";
-                selected_ci_date = now() // make selected start date in picker = start_date value  
-
-            });
-
-            $('#published_on_time').pickatime({
-                clear: ''
-            });
-
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

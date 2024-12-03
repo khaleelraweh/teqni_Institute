@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\AdminInfoRequest;
+use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Slider;
 use App\Models\User;
-use App\Models\WebMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +42,7 @@ class BackendController extends Controller
     {
         $totalPosts = Post::where('section', 1)->count();
         $totalMainSliders = Slider::MainSliders()->count();
-        $totalMainMenus = WebMenu::query()->where('section', 1)->count();
+        $totalMainMenus = Menu::query()->where('section', 1)->count();
         $totalPages     = Page::count();
         $totalSupervisor = User::whereHas('roles', function ($query) {
             $query->where('name', 'supervisor');

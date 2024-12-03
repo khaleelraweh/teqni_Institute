@@ -10,16 +10,16 @@
                     <i class="fa fa-folder"></i>
                     {{ __('panel.manage_account_settings') }}
                 </h3>
-                <ul class="breadcrumb pt-3">
+                <ul class="breadcrumb">
                     <li>
                         <a href="{{ route('admin.index') }}">{{ __('panel.main') }}</a>
                         @if (config('locales.languages')[app()->getLocale()]['rtl_support'] == 'rtl')
-                            /
+                            <i class="fa fa-solid fa-chevron-left chevron"></i>
                         @else
-                            \
+                            <i class="fa fa-solid fa-chevron-right chevron"></i>
                         @endif
                     </li>
-                    <li class="ms-1">
+                    <li>
                         {{ __('panel.show_account_settings') }}
                     </li>
                 </ul>

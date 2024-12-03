@@ -34,7 +34,8 @@
     <!-- endinject -->
 
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{ asset('backend/vendors/flatpickr/flatpickr.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('backend/vendors/flatpickr/flatpickr.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('backend/vendors/flatpickr/flatpickr' . $rtl . '.min.css') }}">
     <!-- End plugin css for this page -->
 
     <!-- inject:css -->
@@ -119,7 +120,8 @@
 
 
     <!-- Plugin js for this page -->
-    <script src="{{ asset('backend/vendors/flatpickr/flatpickr.min.js') }}"></script>
+    {{-- <script src="{{ asset('backend/vendors/flatpickr/flatpickr.min.js') }}"></script> --}}
+    <script src="{{ asset('backend/vendors/flatpickr/flatpickr' . $rtl . '.min.js') }}"></script>
     <script src="{{ asset('backend/js/flatpickr.js') }}"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
     <script src="{{ asset('backend/vendors/apexcharts/apexcharts.min.js') }}"></script>
@@ -151,12 +153,18 @@
 
 
 
+
+
     {{-- End added new  --}}
 
     <!-- Custom js for this page -->
     {{-- <script src="{{ asset('backend/js/dashboard-light.js') }}"></script> --}}
     <!-- End custom js for this page -->
     <script src="<?php echo asset($dark != '' ? 'backend/js/dashboard-dark.js' : 'backend/js/dashboard-light.js'); ?>"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('backend/js/change-status.js') }}"></script>
+    <script src="{{ asset('backend/js/custom.js') }}"></script>
 
 
 

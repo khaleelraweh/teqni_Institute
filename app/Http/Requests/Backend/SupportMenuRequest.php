@@ -26,17 +26,15 @@ class SupportMenuRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        // 'title.*' => 'required|max:255|unique_translation:web_menus,title,NULL,section,section,' . $this->get('section'),
-                        'title.*'       => 'required|max:255',
-                        'link'          =>  'nullable',
+                        'title.ar'       => 'required|max:255',
+                        'description.*'              =>   'nullable',
+                        'link.*'          =>  'nullable',
                         'icon'          =>  'nullable',
                         'parent_id'     =>  'nullable',
-                        'section'       =>  'required',
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'              =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -48,15 +46,14 @@ class SupportMenuRequest extends FormRequest
             case 'PATCH': {
                     return [
                         'title.*'           => 'required|max:255',
-                        'link'              =>   'nullable',
+                        'description.*'              =>   'nullable',
+                        'link.*'              =>   'nullable',
                         'icon'              =>  'nullable',
                         'parent_id'         =>   'nullable',
-                        'section'           =>   'required',
 
                         // used always 
                         'status'             =>  'required',
-                        'published_on'       =>  'nullable',
-                        'published_on_time'  =>  'nullable',
+                        'published_on'              =>  'required',
                         'created_by'         =>  'nullable',
                         'updated_by'         =>  'nullable',
                         'deleted_by'         =>  'nullable',
@@ -74,6 +71,8 @@ class SupportMenuRequest extends FormRequest
         $attr = [
             'link'      => '( ' . __('panel.link') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

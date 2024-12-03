@@ -16,7 +16,7 @@
             <div class="card-naving">
                 <h3 class="font-weight-bold text-primary">
                     <i class="fa fa-plus-square"></i>
-                    {{ __('panel.add_new_post') }}
+                    {{ __('panel.add_new_document_archive') }}
 
                 </h3>
                 <ul class="breadcrumb pt-3">
@@ -38,73 +38,157 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.document_archives.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <label for="doc_archive_name"> {{ __('panel.document_archive_name') }} </label>
-                        <input type="text" id="doc_archive_name" name="doc_archive_name"
-                            value="{{ old('doc_archive_name') }}" class="form-control " placeholder="">
-                        @error('doc_archive_name')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger pt-0 pb-0 mb-0">
+                        <ul class="px-2 py-3 m-0" style="list-style-type: circle">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                </div>
+                @endif
 
-                <!-- row -->
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div>
-                                    <h6 class="card-title mb-1">ارفق مستند هنا </h6>
-                                    <p class="text-muted card-sub-title">يجب ان يكون المستند ضمن الصيغ
-                                        التالية ( .pdf ,
-                                        .docx)</p>
-                                </div>
+                <form action="{{ route('admin.document_archives.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3">
+                            <label for="doc_archive_name" class="control-label">
+                                <span>{{ __('panel.document_archive_name') }}</span>
+                            </label>
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+                            <input type="text" id="doc_archive_name" name="doc_archive_name"
+                                value="{{ old('doc_archive_name') }}" class="form-control" placeholder="">
+                            @error('doc_archive_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
 
-                                <div>
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3">
+                            <label for="doc_archive_name" class="control-label">
+                                <span>{{ __('panel.attach_the_document') }}</span>
+                            </label>
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+                            <input class="dropify" type="file" name="doc_archive_attached_file" accept=".pdf, .docx">
+                            <p class="text-muted card-sub-title pt-2">
+                                <small> {{ __('panel.document_format_message') }} </small>
+                            </p>
+                            @error('doc_archive_attached_file')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                                    <input class="dropify" type="file" name="doc_archive_attached_file"
-                                        accept=".pdf, .docx">
-                                </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3">
+                            {{ __('panel.published_on') }}
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+                            <div class="input-group flatpickr" id="flatpickr-datetime">
+                                <input type="text" name="published_on" value="{{ old('published_on') }}"
+                                    class="form-control" placeholder="Select date" data-input>
+                                <span class="input-group-text input-group-addon" data-toggle>
+                                    <i data-feather="calendar"></i>
+                                </span>
                             </div>
+                            @error('published_on')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-                </div>
 
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3">
+                            <label for="status" class="control-label">
+                                <span>{{ __('panel.status') }}</span>
+                            </label>
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="status" id="status_active"
+                                    value="1" {{ old('status', '1') == '1' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="status_active">
+                                    {{ __('panel.status_active') }}
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="status" id="status_inactive"
+                                    value="0" {{ old('status') == '0' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="status_inactive">
+                                    {{ __('panel.status_inactive') }}
+                                </label>
+                            </div>
+                            @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3 d-none d-md-block">
+                        </div>
+                        <div class="col-sm-12 col-md 10 pt-3">
 
-
-
-
-                <div class="row">
-                    <div class="col-sm-12 ">
-                        {{-- submit button  --}}
-                        <div class="form-group pt-3">
                             <button type="submit" name="submit" class="btn btn-primary">
-                                {{ __('panel.save_data') }}</button>
+                                <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                {{ __('panel.save_data') }}
+                            </button>
+
+                            <a href="{{ route('admin.document_archives.index') }}" name="submit"
+                                class=" btn btn-outline-danger">
+                                <i class="icon-lg  me-2" data-feather="x"></i>
+                                {{ __('panel.cancel') }}
+                            </a>
+
                         </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            </div>
+
+
         </div>
+    @endsection
 
+    @section('script')
+        <!--Internal Fileuploads js-->
+        <script src="{{ URL::asset('backend/vendors/fileuploads/js/fileupload.js') }}"></script>w
+        <script src="{{ URL::asset('backend/vendors/fileuploads/js/file-upload.js') }}"></script>
+        <!--Internal Fancy uploader js-->
+        <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.ui.widget.js') }}"></script>
+        <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.fileupload.js') }}"></script>
+        <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.iframe-transport.js') }}"></script>
+        <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.fancy-fileupload.js') }}"></script>
+        <script src="{{ URL::asset('backend/vendors/fancyuploder/fancy-uploader.js') }}"></script>
 
+        <script>
+            $(function() {
+                'use strict';
 
+                const locale = "{{ app()->getLocale() }}";
 
-    </div>
-@endsection
+                // datetime picker
+                if ($('#flatpickr-datetime').length) {
+                    const defaultDate = "{{ old('published_on') }}" ?
+                        "{{ old('published_on') }}" :
+                        new Date(); // Set to now if no old date exists
 
-@section('script')
-    <!--Internal Fileuploads js-->
-    <script src="{{ URL::asset('backend/vendors/fileuploads/js/fileupload.js') }}"></script>w
-    <script src="{{ URL::asset('backend/vendors/fileuploads/js/file-upload.js') }}"></script>
-    <!--Internal Fancy uploader js-->
-    <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.ui.widget.js') }}"></script>
-    <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.fileupload.js') }}"></script>
-    <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.iframe-transport.js') }}"></script>
-    <script src="{{ URL::asset('backend/vendors/fancyuploder/jquery.fancy-fileupload.js') }}"></script>
-    <script src="{{ URL::asset('backend/vendors/fancyuploder/fancy-uploader.js') }}"></script>
-@endsection
+                    flatpickr("#flatpickr-datetime", {
+                        enableTime: true,
+                        wrap: true,
+                        dateFormat: "Y/m/d h:i K",
+                        minDate: "today", // Prevent dates before today
+                        locale: typeof flatPickrLanguage !== 'undefined' ? flatPickrLanguage : 'en',
+                        defaultDate: defaultDate,
+                    });
+                }
+            });
+        </script>
+    @endsection

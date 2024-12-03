@@ -403,7 +403,7 @@
 
             $("#course_images").fileinput({
                 theme: "fa5",
-                maxFileCount: 5,
+                maxFileCount: 6,
                 allowedFileTypes: ['image'],
                 showCancel: true,
                 showRemove: false,

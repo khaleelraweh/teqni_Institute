@@ -24,7 +24,8 @@ class Page extends Model
     // searchable lab 
     protected $searchable = [
         'columns' => [
-            'courses.title' => 10,
+            'pages.title' => 10,
+            'pages.content' => 10,
         ]
     ];
 
@@ -81,5 +82,10 @@ class Page extends Model
     public function lastMedia(): MorphOne
     {
         return $this->MorphOne(Photo::class, 'imageable')->orderBy('file_sort', 'desc');
+    }
+
+    public function pageCategory()
+    {
+        return $this->belongsTo(pageCategory::class, 'page_category_id', 'id');
     }
 }

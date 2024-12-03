@@ -261,4 +261,18 @@ class AdvertisorSliderController extends Controller
 
         return true;
     }
+
+    public function updateAdvertisorSliderStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            Slider::where('id', $data['advertisor_slider_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'advertisor_slider_id' => $data['advertisor_slider_id']]);
+        }
+    }
 }

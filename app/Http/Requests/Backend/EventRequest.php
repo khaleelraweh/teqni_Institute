@@ -27,7 +27,7 @@ class EventRequest extends FormRequest
             case 'POST': {
                     return [
                         // 'title.*'               =>  'required|max:255|unique_translation:posts',
-                        'title.*'                           =>  'required|max:255',
+                        'title.ar'                           =>  'required|max:255',
                         'content.*'                         =>  'nullable',
 
                         'metadata_title.*'                  =>  'nullable',
@@ -40,6 +40,7 @@ class EventRequest extends FormRequest
                         'end_time'                          =>  'nullable',
 
                         'status'                            =>  'required',
+                        'published_on'              =>  'required',
                         'tags.*'                            =>  'required',
                         'images'                            =>  'required',
                         'images.*'                          =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
@@ -52,7 +53,7 @@ class EventRequest extends FormRequest
             case 'PATCH': {
                     return [
                         // 'title.*'               =>  'required|max:255|unique_translation:posts,title,' . $this->route()->post,
-                        'title.*'                           =>  'required|max:255',
+                        'title.ar'                           =>  'required|max:255',
                         'content.*'                         =>  'nullable',
 
                         'metadata_title.*'                  =>  'nullable',
@@ -65,6 +66,7 @@ class EventRequest extends FormRequest
                         'end_time'                          =>  'nullable',
 
                         'status'                            =>  'required',
+                        'published_on'              =>  'required',
                         'tags.*'                            =>  'required',
                         'images'                            =>  'nullable',
                         'images.*'                          =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
@@ -84,6 +86,8 @@ class EventRequest extends FormRequest
         $attr = [
             'images'      => '( ' . __('panel.images') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

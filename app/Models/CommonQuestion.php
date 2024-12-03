@@ -15,7 +15,7 @@ class CommonQuestion extends Model
     use HasFactory, HasTranslations, HasTranslatableSlug, SearchableTrait;
     protected $guarded = [];
 
-    public $translatable = ['title', 'slug', 'description'];
+    public $translatable = ['title', 'slug', 'description', 'metadata_title', 'metadata_description', 'metadata_keywords'];
 
     protected $casts = [
         'published_on' => 'datetime',

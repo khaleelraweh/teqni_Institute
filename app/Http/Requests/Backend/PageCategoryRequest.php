@@ -26,19 +26,20 @@ class PageCategoryRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'title.*'                   =>  'required|max:255',
-                        'content.*'                 =>  'nullable',
-                        'metadata_title.*'          =>  'nullable',
-                        'metadata_description.*'    =>  'nullable',
-                        'metadata_keywords.*'       =>  'nullable',
-                        'images'                    =>  'required',
-                        'images.*'                  =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
+                        'title.ar'                      =>  'required|max:255',
+                        'content.*'                    =>  'nullable',
+                        'metadata_title.*'              =>  'nullable',
+                        'metadata_description.*'        =>  'nullable',
+                        'metadata_keywords.*'           =>  'nullable',
+                        'images'                        =>  'required',
+                        'images.*'                      =>  'mimes:jpg,jpeg,png,gif,webp|max:3000',
 
                         // used always 
-                        'status'                    =>  'required',
-                        'created_by'                =>  'nullable',
-                        'updated_by'                =>  'nullable',
-                        'deleted_by'                =>  'nullable',
+                        'status'                        =>  'required',
+                        'published_on'                  =>  'required',
+                        'created_by'                    =>  'nullable',
+                        'updated_by'                    =>  'nullable',
+                        'deleted_by'                    =>  'nullable',
                         // end of used always 
 
                     ];
@@ -46,8 +47,8 @@ class PageCategoryRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title.*'                   =>   'required|max:255',
-                        'content.*'                 =>   'nullable',
+                        'title.ar'                  =>   'required|max:255',
+                        'content.*'                =>   'nullable',
                         'metadata_title.*'          =>  'nullable',
                         'metadata_description.*'    =>  'nullable',
                         'metadata_keywords.*'       =>  'nullable',
@@ -55,10 +56,11 @@ class PageCategoryRequest extends FormRequest
 
 
                         // used always 
-                        'status'             =>  'required',
-                        'created_by'         =>  'nullable',
-                        'updated_by'         =>  'nullable',
-                        'deleted_by'         =>  'nullable',
+                        'status'                    =>  'required',
+                        'published_on'              =>  'required',
+                        'created_by'                =>  'nullable',
+                        'updated_by'                =>  'nullable',
+                        'deleted_by'                =>  'nullable',
                         // end of used always 
                     ];
                 }
@@ -72,6 +74,8 @@ class PageCategoryRequest extends FormRequest
     {
         $attr = [
             'content'      => '( ' . __('panel.f_content') . ' )',
+            'images'      => '( ' . __('panel.images') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
         ];
 

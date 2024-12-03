@@ -117,25 +117,48 @@
                         <hr>
 
 
-                        <div class="row pt-4">
-                            <div class="col-12">
-                                <label for="question_video_image"> {{ __('panel.image') }}
-                                    <span><small> ( {{ __('panel.best_size') }}: 250 * 240 )</small></span>
-
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                <label for="images">
+                                    {{ __('panel.image') }} / {{ __('panel.images') }}
+                                    <span>
+                                        <br>
+                                        <small> {{ __('panel.best_size') }}</small>
+                                        <small> 350 * 250</small>
+                                    </span>
                                 </label>
-                                <br>
-                                <span class="form-text text-muted">{{ __('panel.question_video_image_size') }} </span>
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
                                 <div class="file-loading">
                                     <input type="file" name="question_video_image" id="question_video_image"
                                         value="{{ old('question_video_image') }}" class="file-input-overview ">
                                     <span class="form-text text-muted">{{ __('panel.question_video_image_size') }} </span>
-                                    @error('question_video_image')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
+                                @error('question_video_image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                {{ __('panel.published_on') }}
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="input-group flatpickr" id="flatpickr-datetime">
+                                    <input type="text" name="published_on" class="form-control" placeholder="Select date"
+                                        data-input
+                                        value="{{ old('published_on', $commonQuestion->published_on ? \Carbon\Carbon::parse($commonQuestion->published_on)->format('Y/m/d h:i A') : '') }}">
+                                    <span class="input-group-text input-group-addon" data-toggle>
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                                @error('published_on')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-sm-12 col-md-2 pt-3">
@@ -144,16 +167,22 @@
                                 </label>
                             </div>
                             <div class="col-sm-12 col-md-10 pt-3">
-                                <select name="status" class="form-control">
-                                    <option value="1"
-                                        {{ old('status', $commonQuestion->status) == '1' ? 'selected' : null }}>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_active"
+                                        value="1"
+                                        {{ old('status', $commonQuestion->status) == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_active">
                                         {{ __('panel.status_active') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('status', $commonQuestion->status) == '0' ? 'selected' : null }}>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_inactive"
+                                        value="0"
+                                        {{ old('status', $commonQuestion->status) == '0' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_inactive">
                                         {{ __('panel.status_inactive') }}
-                                    </option>
-                                </select>
+                                    </label>
+                                </div>
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -164,10 +193,22 @@
                     </div>
 
 
-                    <div class="form-group pt-4">
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            {{ __('panel.update_data') }}
-                        </button>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3 d-none d-md-block">
+                        </div>
+                        <div class="col-sm-12 col-md-10 pt-3">
+                            <button type="submit" name="submit" class="btn btn-primary">
+                                <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                {{ __('panel.update_data') }}
+                            </button>
+
+                            <a href="{{ route('admin.common_question_videos.index') }}" name="submit"
+                                class=" btn btn-outline-danger">
+                                <i class="icon-lg  me-2" data-feather="x"></i>
+                                {{ __('panel.cancel') }}
+                            </a>
+
+                        </div>
                     </div>
                 </div>
 

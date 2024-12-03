@@ -13,16 +13,16 @@
                     <i class="fa fa-edit"></i>
                     {{ __('panel.edit_existing_question') }}
                 </h3>
-                <ul class="breadcrumb">
+                <ul class="breadcrumb pt-3">
                     <li>
                         <a href="{{ route('admin.index') }}">{{ __('panel.main') }}</a>
                         @if (config('locales.languages')[app()->getLocale()]['rtl_support'] == 'rtl')
-                            <i class="fa fa-solid fa-chevron-left chevron"></i>
+                            /
                         @else
-                            <i class="fa fa-solid fa-chevron-right chevron"></i>
+                            \
                         @endif
                     </li>
-                    <li>
+                    <li class="ms-1">
                         <a href="{{ route('admin.common_questions.index') }}">
                             {{ __('panel.show_questions') }}
                         </a>
@@ -35,10 +35,9 @@
         {{-- body part  --}}
         <div class="card-body">
 
-            {{-- erorrs show is exists --}}
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="alert alert-danger pt-0 pb-0 mb-0">
+                    <ul class="px-2 py-3 m-0" style="list-style-type: circle">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -52,22 +51,17 @@
                 @csrf
                 @method('PATCH')
 
-                {{-- links of tabs --}}
+
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    @foreach (config('locales.languages') as $key => $val)
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ $loop->index == 0 ? 'active' : '' }}" id="{{ $key }}-tab"
-                                data-bs-toggle="tab" data-bs-target="#{{ $key }}" type="button" role="tab"
-                                aria-controls="{{ $key }}" aria-selected="true">
-                                {{ __('panel.content_tab') }}({{ $key }})
-                            </button>
-                        </li>
-                    @endforeach
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content"
+                            type="button" role="tab" aria-controls="content"
+                            aria-selected="true">{{ __('panel.content_tab') }}</button>
+                    </li>
 
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="published-tab" data-bs-toggle="tab" data-bs-target="#published"
-                            type="button" role="tab" aria-controls="published"
-                            aria-selected="false">{{ __('panel.published_tab') }}
+                        <button class="nav-link" id="SEO-tab" data-bs-toggle="tab" data-bs-target="#SEO" type="button"
+                            role="tab" aria-controls="SEO" aria-selected="false">{{ __('panel.SEO_tab') }}
                         </button>
                     </li>
 
@@ -75,95 +69,95 @@
 
                 <div class="tab-content" id="myTabContent">
 
-                    {{-- content tab --}}
-                    @foreach (config('locales.languages') as $key => $val)
-                        <div class="tab-pane fade {{ $loop->index == 0 ? 'show active' : '' }}" id="{{ $key }}"
-                            role="tabpanel" aria-labelledby="{{ $key }}">
-
-                            {{--  title field --}}
-                            <div class="row ">
-                                <div class="col-sm-12 pt-3">
-                                    <div class="form-group">
-                                        <label for="title[{{ $key }}]">
-                                            {{ __('panel.title') }}
-                                            {{ __('panel.in') }} {{ __('panel.' . $key) }}
-                                        </label>
-                                        <input type="text" name="title[{{ $key }}]"
-                                            id="title[{{ $key }}]"
-                                            value="{{ old('title.' . $key, $commonQuestion->getTranslation('title', $key)) }}"
-                                            class="form-control">
-                                        @error('title.' . $key)
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{--  description field --}}
+                    <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
+                        @foreach (config('locales.languages') as $key => $val)
                             <div class="row">
-                                <div class="col-sm-12 col-md-12 pt-4">
-                                    <label for="description[{{ $key }}]">
-                                        {{ __('panel.description') }}
-                                        {{ __('panel.in') }} {{ __('panel.' . $key) }}
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="title[{{ $key }}]">
+                                        {{ __('panel.title') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
                                     </label>
-                                    <textarea name="description[{{ $key }}]" rows="10" class="form-control summernote">
-                                    {!! old('description.' . $key, $commonQuestion->getTranslation('description', $key)) !!}
-                                </textarea>
                                 </div>
-                            </div>
-
-                        </div>
-                    @endforeach
-
-
-                    {{-- Published Tab --}}
-                    <div class="tab-pane fade" id="published" role="tabpanel" aria-labelledby="published-tab">
-
-                        {{-- published_on and published_on_time  --}}
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4">
-                                <div class="form-group">
-                                    <label for="published_on"> {{ __('panel.published_date') }}</label>
-                                    <input type="text" id="published_on" name="published_on"
-                                        value="{{ old('published_on', \Carbon\Carbon::parse($commonQuestion->published_on)->Format('Y-m-d')) }}"
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <input type="text" name="title[{{ $key }}]"
+                                        id="title[{{ $key }}]"
+                                        value="{{ old('title.' . $key, $commonQuestion->getTranslation('title', $key)) }}"
                                         class="form-control">
-                                    @error('published_on')
+                                    @error('title.' . $key)
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
 
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 pt-4">
-                                <div class="form-group">
-                                    <label for="published_on_time">{{ __('panel.published_time') }}</label>
-                                    <input type="text" id="published_on_time" name="published_on_time"
-                                        value="{{ old('published_on_time', \Carbon\Carbon::parse($commonQuestion->published_on)->Format('h:i A')) }}"
-                                        class="form-control">
-                                    @error('published_on_time')
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row ">
+                                <div class="col-sm-12 col-md-2 pt-3">
+                                    <label for="description[{{ $key }}]">
+                                        {{ __('panel.f_description') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-10 pt-3">
+                                    <textarea id="tinymceExample" name="description[{{ $key }}]" rows="10" class="form-control ">{!! old('description.' . $key, $commonQuestion->getTranslation('description', $key)) !!}</textarea>
+                                    @error('description.' . $key)
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+                        @endforeach
 
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                {{ __('panel.published_on') }}
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="input-group flatpickr" id="flatpickr-datetime">
+                                    <input type="text" name="published_on" class="form-control" placeholder="Select date"
+                                        data-input
+                                        value="{{ old('published_on', $commonQuestion->published_on ? \Carbon\Carbon::parse($commonQuestion->published_on)->format('Y/m/d h:i A') : '') }}">
+                                    <span class="input-group-text input-group-addon" data-toggle>
+                                        <i data-feather="calendar"></i>
+                                    </span>
+                                </div>
+                                @error('published_on')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 pt-3">
-                                <label for="status" class="control-label col-md-2 col-sm-12 ">
+                            <div class="col-sm-12 col-md-2 pt-3">
+                                <label for="status" class="control-label">
                                     <span>{{ __('panel.status') }}</span>
                                 </label>
-                                <select name="status" class="form-control">
-                                    <option value="1"
-                                        {{ old('status', $commonQuestion->status) == '1' ? 'selected' : null }}>
+                            </div>
+                            <div class="col-sm-12 col-md-10 pt-3">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_active"
+                                        value="1"
+                                        {{ old('status', $commonQuestion->status) == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_active">
                                         {{ __('panel.status_active') }}
-                                    </option>
-                                    <option value="0"
-                                        {{ old('status', $commonQuestion->status) == '0' ? 'selected' : null }}>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input" name="status" id="status_inactive"
+                                        value="0"
+                                        {{ old('status', $commonQuestion->status) == '0' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_inactive">
                                         {{ __('panel.status_inactive') }}
-                                    </option>
-                                </select>
+                                    </label>
+                                </div>
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -172,11 +166,102 @@
 
                     </div>
 
-                    <div class="form-group pt-4">
-                        <button type="submit" name="submit" class="btn btn-primary">
-                            {{ __('panel.update_data') }}
-                        </button>
+                    <div class="tab-pane fade" id="SEO" role="tabpanel" aria-labelledby="SEO-tab">
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_title[{{ $key }}]">
+                                        {{ __('panel.metadata_title') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_title[{{ $key }}]"
+                                        id="metadata_title[{{ $key }}]"
+                                        value="{{ old('metadata_title.' . $key, $commonQuestion->getTranslation('metadata_title', $key)) }}"
+                                        class="form-control">
+                                    @error('metadata_title.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_description[{{ $key }}]">
+                                        {{ __('panel.metadata_description') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_description[{{ $key }}]"
+                                        id="metadata_description[{{ $key }}]"
+                                        value="{{ old('metadata_description.' . $key, $commonQuestion->getTranslation('metadata_description', $key)) }}"
+                                        class="form-control">
+                                    @error('metadata_description.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <hr>
+
+                        @foreach (config('locales.languages') as $key => $val)
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 pt-3">
+                                    <label for="metadata_keywords[{{ $key }}]">
+                                        {{ __('panel.metadata_keywords') }}
+                                        <span class="language-type">
+                                            <i class="flag-icon flag-icon-{{ $key == 'ar' ? 'ye' : 'us' }} mt-1 "
+                                                title="{{ app()->getLocale() == 'ar' ? 'ye' : 'us' }}"></i>
+                                            {{ __('panel.' . $key) }}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-12 col-md-9 pt-3">
+                                    <input type="text" name="metadata_keywords[{{ $key }}]"
+                                        id="metadata_keywords[{{ $key }}]"
+                                        value="{{ old('metadata_keywords.' . $key, $commonQuestion->getTranslation('metadata_keywords', $key)) }}"
+                                        class="form-control">
+                                    @error('metadata_keywords.' . $key)
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-2 pt-3 d-none d-md-block">
+                        </div>
+                        <div class="col-sm-12 col-md 10 pt-3">
+                            <button type="submit" name="submit" class="btn btn-primary">
+                                <i class="icon-lg  me-2" data-feather="corner-down-left"></i>
+                                {{ __('panel.update_data') }}
+                            </button>
+
+                            <a href="{{ route('admin.common_questions.index') }}" name="submit"
+                                class=" btn btn-outline-danger">
+                                <i class="icon-lg  me-2" data-feather="x"></i>
+                                {{ __('panel.cancel') }}
+                            </a>
+
+                        </div>
+                    </div>
+
                 </div>
 
             </form>

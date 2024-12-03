@@ -83,12 +83,12 @@
                                     @php
                                         $recentImage =
                                             $recent_post->photos->first()->file_name ??
-                                            'image/not_found/item_image_not_found.webp';
+                                            'image/not_found/placeholder.jpg';
                                         $recentImgUrl = asset($assetPath . $recentImage);
 
                                         // Check if the image exists, otherwise fallback to default
                                         if (!file_exists(public_path(parse_url($recentImgUrl, PHP_URL_PATH)))) {
-                                            $recentImgUrl = asset('image/not_found/item_image_not_found.webp');
+                                            $recentImgUrl = asset('image/not_found/placeholder.jpg');
                                         }
                                     @endphp
 
@@ -151,7 +151,7 @@
                                                     $post_img = getPostTagImage(
                                                         $post,
                                                         $currentRoute,
-                                                        asset('image/not_found/item_image_not_found.webp'),
+                                                        asset('image/not_found/placeholder.jpg'),
                                                     );
                                                 @endphp
                                                 <img src="{{ $post_img }}" alt="">

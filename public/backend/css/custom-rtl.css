@@ -22,7 +22,34 @@
 .sidebar .sidebar-body .nav .nav-item.active .nav-link::before {
     right: -15px;
 }
-
 .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link{
     height: 2.4em;
+}
+
+/* .border-danger, .swal2-popup .swal2-actions button.swal2-cancel,
+.btn, .wizard > .actions a, .wizard > .actions a:active, .wizard > .actions a:hover, div.tox .tox-button, .swal2-popup .swal2-actions button, .fc .fc-button-primary{
+    border-color: snow !important;
+} */
+
+/* copy message style  */
+.copyButton {
+    position: relative;
+}
+
+.copyMessage {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1000;
+    font-size: 12px;
+    width: auto;
+    /* Ensure width fits content */
+    white-space: nowrap;
+    /* Prevents line break to ensure width fits content */
 }

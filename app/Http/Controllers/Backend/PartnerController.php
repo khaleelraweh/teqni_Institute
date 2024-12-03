@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\PartnerRequest;
 use App\Models\Partner;
+use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -30,8 +31,10 @@ class PartnerController extends Controller
             ->when(\request()->status != null, function ($query) {
                 $query->where('status', \request()->status);
             })
-            ->orderBy(\request()->sort_by ?? 'created_at', \request()->order_by ?? 'desc')
-            ->paginate(\request()->limit_by ?? 10);
+            ->orderByRaw(request()->sort_by == 'published_on'
+                ? 'published_on IS NULL, published_on ' . (request()->order_by ?? 'desc')
+                : (request()->sort_by ?? 'created_at') . ' ' . (request()->order_by ?? 'desc'))
+            ->paginate(\request()->limit_by ?? 100);
 
         return view('backend.partners.index', compact('partners'));
     }
@@ -52,15 +55,33 @@ class PartnerController extends Controller
             return redirect('admin/index');
         }
 
-        // dd($request);
-
         $input['name']                         =   $request->name;
         $input['description']                   =   $request->description;
         $input['partner_link']                   =   $request->partner_link;
 
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->name[$localeKey] ?? null;
+        }
+        $input['metadata_description'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $description = $request->description[$localeKey] ?? '';
+            // Remove all tags and decode HTML entities
+            $plainDescription = html_entity_decode(strip_tags($description), ENT_QUOTES | ENT_HTML5);
+            // Limit to 30 words
+            $limitedDescription = implode(' ', array_slice(explode(' ', $plainDescription), 0, 30));
+            $input['metadata_description'][$localeKey] = $request->metadata_description[$localeKey]
+                ?: $limitedDescription ?: null;
+        }
+        $input['metadata_keywords'] = $request->metadata_keywords;
+
         $input['status']                        =   $request->status;
         $input['created_by']                    =   auth()->user()->full_name;
 
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
 
 
         // Handle file partner_image
@@ -109,14 +130,33 @@ class PartnerController extends Controller
 
         $partner = Partner::where('id', $partner)->first();
 
-
         $input['name'] = $request->name;
         $input['description'] = $request->description;
         $input['partner_link']                   =   $request->partner_link;
 
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->name[$localeKey] ?? null;
+        }
+        $input['metadata_description'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $description = $request->description[$localeKey] ?? '';
+            // Remove all tags and decode HTML entities
+            $plainDescription = html_entity_decode(strip_tags($description), ENT_QUOTES | ENT_HTML5);
+            // Limit to 30 words
+            $limitedDescription = implode(' ', array_slice(explode(' ', $plainDescription), 0, 30));
+            $input['metadata_description'][$localeKey] = $request->metadata_description[$localeKey]
+                ?: $limitedDescription ?: null;
+        }
+        $input['metadata_keywords'] = $request->metadata_keywords;
+
         $input['status'] = $request->status;
         $input['updated_by'] = auth()->user()->full_name;
 
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
 
         if ($image = $request->file('partner_image')) {
             if ($partner->partner_image != null && File::exists('assets/partners/' . $partner->partner_image)) {
@@ -187,5 +227,19 @@ class PartnerController extends Controller
         }
 
         return true;
+    }
+
+    public function updatePartnerStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            Partner::where('id', $data['partner_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'partner_id' => $data['partner_id']]);
+        }
     }
 }

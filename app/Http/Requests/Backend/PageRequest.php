@@ -26,7 +26,7 @@ class PageRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'title.*'                       =>  'required|max:255',
+                        'title.ar'                       =>  'required|max:255',
                         'content.*'                     =>  'nullable',
 
                         'page_category_id'              =>  'required',
@@ -39,6 +39,7 @@ class PageRequest extends FormRequest
 
                         // used always 
                         'status'                        =>  'required',
+                        'published_on'              =>  'required',
                         'created_by'                    =>  'nullable',
                         'updated_by'                    =>  'nullable',
                         'deleted_by'                    =>  'nullable',
@@ -49,7 +50,7 @@ class PageRequest extends FormRequest
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title.*'                           =>   'required|max:255',
+                        'title.ar'                           =>   'required|max:255',
                         'content.*'                         =>   'nullable',
 
                         'page_category_id'                  =>  'required',
@@ -64,6 +65,7 @@ class PageRequest extends FormRequest
 
                         // used always 
                         'status'                            =>  'required',
+                        'published_on'                      =>  'required',
                         'created_by'                        =>  'nullable',
                         'updated_by'                        =>  'nullable',
                         'deleted_by'                        =>  'nullable',
@@ -80,7 +82,11 @@ class PageRequest extends FormRequest
     {
         $attr = [
             'content'      => '( ' . __('panel.f_content') . ' )',
+            'page_category_id'      => '( ' . __('panel.category_name') . ' )',
+            'images'      => '( ' . __('panel.images') . ' )',
             'status'    =>  '( ' . __('panel.status') . ' )',
+            'published_on'      => '( ' . __('panel.published_on') . ' )',
+
         ];
 
         foreach (config('locales.languages') as $key => $val) {

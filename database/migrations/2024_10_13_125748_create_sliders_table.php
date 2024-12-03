@@ -24,13 +24,19 @@ return new class extends Migration
             $table->string('icon')->nullable();
 
             $table->json('btn_title');
-            $table->string('url')->nullable();
+            $table->json('url')->nullable();
             $table->boolean('show_btn_title')->default(true); // عرض العنوان والتصفاصيل 
 
             $table->string('target')->default('_self');
             $table->unsignedBigInteger('section')->default(1);
 
             $table->boolean('show_info')->default(true); // عرض العنوان والتصفاصيل 
+
+            // SEO
+            $table->json('metadata_title')->nullable();
+            $table->json('metadata_description')->nullable();
+            $table->json('metadata_keywords')->nullable();
+            // end SEO
 
             // will be use always
             $table->boolean('status')->default(true);

@@ -26,8 +26,10 @@ class StatisticsController extends Controller
             ->when(\request()->status != null, function ($query) {
                 $query->where('status', \request()->status);
             })
-            ->orderBy(\request()->sort_by ?? 'created_at', \request()->order_by ?? 'desc')
-            ->paginate(\request()->limit_by ?? 10);
+            ->orderByRaw(request()->sort_by == 'published_on'
+                ? 'published_on IS NULL, published_on ' . (request()->order_by ?? 'desc')
+                : (request()->sort_by ?? 'created_at') . ' ' . (request()->order_by ?? 'desc'))
+            ->paginate(\request()->limit_by ?? 100);
 
 
         return view('backend.statistics.index', compact('statistics'));
@@ -38,7 +40,6 @@ class StatisticsController extends Controller
         if (!auth()->user()->ability('admin', 'create_statistics')) {
             return redirect('admin/index');
         }
-
 
         return view('backend.statistics.create');
     }
@@ -53,12 +54,21 @@ class StatisticsController extends Controller
         $input['title']                     =   $request->title;
         $input['statistic_number']          =   $request->statistic_number;
 
-        $input['metadata_title']        = $request->metadata_title;
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->title[$localeKey] ?? null;
+        }
         $input['metadata_description']  = $request->metadata_description;
         $input['metadata_keywords']     = $request->metadata_keywords;
 
         $input['status']                    =   $request->status;
         $input['created_by']                =   auth()->user()->full_name;
+
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
+
 
         // Save album profile 
         if ($image = $request->file('statistic_image')) {
@@ -115,12 +125,21 @@ class StatisticsController extends Controller
         $input['title']                     =   $request->title;
         $input['statistic_number']          =   $request->statistic_number;
 
-        $input['metadata_title']        = $request->metadata_title;
+        $input['metadata_title'] = [];
+        foreach (config('locales.languages') as $localeKey => $localeValue) {
+            $input['metadata_title'][$localeKey] = $request->metadata_title[$localeKey]
+                ?: $request->title[$localeKey] ?? null;
+        }
         $input['metadata_description']  = $request->metadata_description;
         $input['metadata_keywords']     = $request->metadata_keywords;
 
         $input['status']                    =   $request->status;
         $input['created_by']                =   auth()->user()->full_name;
+
+        $published_on = str_replace(['ص', 'م'], ['AM', 'PM'], $request->published_on);
+        $publishedOn = Carbon::createFromFormat('Y/m/d h:i A', $published_on)->format('Y-m-d H:i:s');
+        $input['published_on']            = $publishedOn;
+
 
         // Save album profile 
         if ($statisticImage = $request->file('statistic_image')) {
@@ -189,6 +208,20 @@ class StatisticsController extends Controller
             $statistic->save();
 
             return true;
+        }
+    }
+
+    public function updateStatisticStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            Statistic::where('id', $data['statistic_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'statistic_id' => $data['statistic_id']]);
         }
     }
 }
