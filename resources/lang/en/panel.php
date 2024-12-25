@@ -1636,6 +1636,7 @@ return [
     'doc_archive_name'                                  =>  'Archive Name',
 
 
-    'website_shortcuts'                     =>  'Website shortcuts',
+    'website_shortcuts'                                 =>  'Website shortcuts',
+    'applications'                                      =>  'Applications',
 
 ];

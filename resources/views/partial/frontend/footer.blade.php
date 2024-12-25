@@ -60,7 +60,7 @@
                      </ul>
                  </div>
                  <div class="col-lg-3 col-md-12 col-sm-12 ">
-                     <h3 class="widget-title">{{ __('panel.recent_posts') }}</h3>
+                     <h3 class="widget-title">{{ __('panel.applications') }} </h3>
                      <div class="row mb-4">
                          <div class="col-lg-6 col-md-6 col-sm-6 footer-widget">
                              <div class="counter-item text-center">

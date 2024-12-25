@@ -1615,7 +1615,9 @@ return [
 
 
     // --------------- common in tracks menu ----------//
-    'website_shortcuts'                     =>  'اختصارات الموقع',
+    'website_shortcuts'                                 =>  'اختصارات الموقع',
+    'applications'                                      =>  'التطبيقات',
+
 
 
 
