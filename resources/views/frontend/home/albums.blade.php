@@ -17,10 +17,10 @@
                          @foreach ($albums as $album)
                              <div class="blog-item degree-wrap">
                                  @php
-                                     if ($album->statistic_image != null) {
-                                         $album_img = asset('assets/albums/' . $album->statistic_image);
+                                     if ($album->album_profile != null) {
+                                         $album_img = asset('assets/albums/' . $album->album_profile);
 
-                                         if (!file_exists(public_path('assets/albums/' . $album->statistic_image))) {
+                                         if (!file_exists(public_path('assets/albums/' . $album->album_profile))) {
                                              $album_img = asset('image/not_found/placeholder.jpg');
                                          }
                                      } else {
