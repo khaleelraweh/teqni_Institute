@@ -24,13 +24,14 @@
                                               $college_menu->photos->first()->file_name != null
                                           ) {
                                               $college_menu_img = asset(
-                                                  'assets/college_menus/' . $college_menu->photos->first()->file_name,
+                                                  'assets/academic_program_menus/' .
+                                                      $college_menu->photos->first()->file_name,
                                               );
 
                                               if (
                                                   !file_exists(
                                                       public_path(
-                                                          'assets/college_menus/' .
+                                                          'assets/academic_program_menus/' .
                                                               $college_menu->photos->first()->file_name,
                                                       ),
                                                   )
