@@ -14,15 +14,19 @@ return [
     'total_supervisors'                 =>  'إجمالي المشرفين',
     'total_admin_pages'                 =>  'إجمالي صفحات الإدارة',
 
-    'ibb'                               =>  'إب',
-    'univercity'                        =>  'جامعة',
+    'ibb'                               =>  'التقني',
+    'univercity'                        =>  'المعهد',
 
     ############################  إدارة القوائم ################################
     'manage_menus'                      => 'إدارة القوائم ',
     'manage_company_menus'              => 'إدارة قوائم المؤسسة',
     'manage_topics_menus'               => 'إدارة قوائم الموضوعات',
-    'manage_tracks_menus'               => 'إدارة قوائم المسارات',
-    'manage_academic_program_menus'              => 'إدارة البرامج الأكاديمية',
+    // 'manage_tracks_menus'               => 'إدارة قوائم المسارات',
+    'manage_tracks_menus'               => 'إدارة قوائم اختصارات الموقع',
+    // 'manage_support_menus'       => 'Manage Support Menus',
+
+    'manage_support_menus'              => 'إدارة قائمة روابط تهمك',
+    'manage_college_menus'              => 'إدارة قوائم اقسام المعهد',
 
 
 
@@ -33,17 +37,10 @@ return [
     'edit_existing_link'                => 'تعديل بيانات الرابط',
     'category_menu'                     => 'تصنيفات القائمة الرئيسية',
 
-    // --------------- Main Menu --------------//
-    'manage_main_menus'                 => 'إدارة القائمة الرئيسية',
-    'show_main_menus'                   => 'القائمة الرئيسية',
-    'add_new_main_menu_item'            => 'إضافة عنصر قائمة رئيسية',
-    'edit_existing_main_menu_item'      => 'تعديل عنصر قائمة رئيسية',
-    'category_menu'                     => 'تصنيفات القائمة الرئيسية',
-
-    // --------------- Academic Program Menus --------------//
-    'show_academic_program_menus'            => 'قائمة البرامج الأكاديمية',
-    'add_new_academic_program'              => 'إضافة برنامج اكاديمي',
-    'edit_existing_academic_program'        => 'تعديل برنامج اكاديمي',
+    // --------------- college Menus --------------//
+    'show_college_menus'            => 'قائمة اقسام المعهد',
+    'add_new_college'              => 'إضافة قسم',
+    'edit_existing_college'        => 'تعديل قسم',
 
 
     // --------------- قائمة المؤسسة --------------//
@@ -51,36 +48,22 @@ return [
     'add_new_company_link'              => 'إضافة قائمة مؤسسة جديدة',
     'edit_existing_company_menu_link'        => 'تعديل قائمة مؤسسة موجودة',
 
-    // --------------- important link Menu --------------//
-    'manage_important_link_menus'   =>  'إدارة قائمة روابط مهمة',
-    'show_important_link_menus'        => 'قائمة روابط مهمة',
-    'add_new_important_link_menu_item'              => 'إضافة عنصر قائمة روابط مهمة',
-    'edit_existing_important_link_menu_item'        => 'تعديل عنصر قائمة روابط مهمة',
-
-    // --------------- contact us Menu --------------//
-    'manage_contact_us_menus'   =>  'إدارة قائمة تواصل معنا',
-    'show_contact_us_menus'        => 'قائمة تواصل معنا',
-    'add_new_contact_us_menu_item'              => 'إضافة عنصر قائمة تواصل معنا',
-    'edit_existing_contact_us_menu_item'        => 'تعديل عنصر قائمة تواصل معنا',
-
-    // --------------- policies and privacy Menu --------------//
-    'manage_policies_privacy_menus'   =>  'إدارة قائمة السياسات والخصوصية',
-    'show_policies_privacy_menus'        => 'قائمة السياسات والخصوصية',
-    'add_new_policies_privacy_menu_item'              => 'إضافة عنصر قائمة السياسات والخصوصية',
-    'edit_existing_policies_privacy_menu_item'        => 'تعديل عنصر قائمة السياسات والخصوصية',
-
-
-
     // --------------- قائمة موضوعات --------------//
     'show_topics_menus'        => 'قائمة الموضوعات',
     'add_new_topics_link'              => 'إضافة قائمة موضوعات جديدة',
     'edit_existing_topics_menu_link'        => 'تعديل قائمة موضوعات موجودة',
 
     // --------------- قائمة مسارات --------------//
-    'show_tracks_menus'        => 'قائمة المسارات',
-    'add_new_tracks_link'              => 'إضافة قائمة مسارات جديدة',
-    'edit_existing_tracks_menu_link'        => 'تعديل قائمة مسارات موجودة',
-    'manage_support_menus'              => 'إدارة قوائم المساعدة',
+    // 'show_tracks_menus'        => 'قائمة المسارات',
+    // 'add_new_tracks_link'              => 'إضافة قائمة مسارات جديدة',
+    // 'edit_existing_tracks_menu_link'        => 'تعديل قائمة مسارات موجودة',
+
+    'show_tracks_menus'        => 'قائمة اختصارات الموقع',
+    'add_new_tracks_link'              => 'إضافة قائمة اختصار جديدة',
+    'edit_existing_tracks_menu_link'        => 'تعديل قائمة اختصار موجودة',
+
+    // --------------- common in tracks menu ----------//
+    'website_shortcuts'                     =>  'اختصارات الموقع',
 
 
 
@@ -88,6 +71,10 @@ return [
     'show_support_menus'        => 'قائمة المساعدة',
     'add_new_support_link'              => 'إضافة قائمة مساعدة جديدة',
     'edit_existing_support_menu_link'        => 'تعديل قائمة مساعدة موجودة',
+
+    'show_support_menus'        => 'روابط مهمة',
+    'add_new_support_link'              => 'إضافة قائمة رابط مهم جديدة',
+    'edit_existing_support_menu_link'        => 'تعديل قائمة رابط مهم موجودة',
 
 
     // ----------------- قائمة المساعدة -------------- //
@@ -121,12 +108,6 @@ return [
     'in_new_tab'                        => 'عرض في تبويب جديد',
     'browse_button_title'               =>  'عنوان زر التصفح',
     'show_browsing_button'               =>  'عرض زر التصفح',
-    'browse_button_options'             =>  'خيارات زر التصفح',
-    'publishing_options'                =>  'خيارات النشر',
-    'slide_detail_options'              =>  'خيارات تفاصيل الشريحة',
-
-
-
 
 
     ################################ Manage Categories  #########################
@@ -341,15 +322,6 @@ return [
     'metadata_title'                                =>  'عنوان صفحة تعريفية ( Page Title)',
     'metadata_description'                          =>  'وصف صفحة تعريفية (Page Description)',
     'metadata_keywords'                             =>  'وصف الكلمات التعريفية (Page Keywords)',
-    'cancel'                                        =>  'إلغاء',
-    'ok'                                            =>  'نعم',
-    'yes_delete'                                    =>  'نعم،قم بالحذف',
-    'page_category_can_not_be_deleted'              =>  'لا يمكن حذف هذالتصنيف حاليا',
-    'page_category_have_pages_you_must_delete_pages_before' =>  'هذا التصنيف لدية صفحات ، يجب عليك حذف صفحات التصنيف اولا',
-    'operation_options'                                       =>  'خيارات',
-    'operation_edit'                                          =>  'تعديل',
-    'operation_delete'                                        =>  'حذف',
-    'operation_copy_link'                                     =>  'نسخ الرابط',
 
 
 
@@ -400,18 +372,6 @@ return [
 
     // ........... commons in About Instatutes ....... //
 
-    ########################### Manage president Speeches  ##################################
-
-    // =============  Manage president Speeches  ===============//
-    'manage_president_speeches'                          => 'إدارة كلمة الرئيس',
-
-    // --------------- president speeches  --------------//
-    'show_president_speeches'                            => 'كلمة الرئيس',
-    'add_new_president_speech'                          => 'إضافة كلمة الرئيس',
-    'edit_existing_president_speech'                    => 'تعديل كلمة الرئيس',
-
-    // ........... commons in President Speeches  ....... //
-
 
     #################################### Manage Tags ##########################
     'manage_tags'                       => 'إدارة الكلمات المفتاحية',
@@ -440,12 +400,10 @@ return [
     // ........... commons in Archive   ....... //
     'document_archive_data'                                =>  'بيانات ارشيف مستند',
     'document_archive_name'                                =>  'إسم ارشيف الوثيقة',
-    'attach_the_document'                                   =>  'ارفاق المستند',
-    'document_format_message'                               =>  'يجب أن تكون الوثيقة بالتنسيقات التالية ( PDF - Docx ) ',
 
     // --------------- Document Statistics  --------------//
-    'manage_statistics'                                     =>  'إدارة إحصائيات الجامعة',
-    'show_statistics'                                       => 'إحصائيات الجامعة',
+    'manage_statistics'                                     =>  'إدارة إحصائيات المعهد',
+    'show_statistics'                                       => 'إحصائيات المعهد',
     'add_new_statistic'                                     => 'إضافة إحصاء جديد',
     'edit_existing_statistic'                               => 'تعديل إحصاء موجود',
 
@@ -718,6 +676,8 @@ return [
     // ........... commons in Testimontails  ....... //
     'testimonial'                           =>  'شهادة',
     'what_students_saying'                  =>  'ماذا يقول طلابنا',
+
+
 
 
     ################################ Manage Blogs ############################
@@ -1507,55 +1467,6 @@ return [
 
     // new work in in university 
     'news_update'                                       =>  'تحديث الأخبار',
-    'university_news'                                   =>  'أخبار الجامعة',
-    'activities_update'                                 =>  'تحديث الفعاليات',
-    'university_activities'                             =>  'فعاليات الجامعة',
-
-    'calendar_gregorian'                                =>  'م',
-    'calendar_hijri'                                    =>  'هـ',
-
-    'read_more'                                         =>  'إقراء اكثر',
-    'read_less'                                         =>  'إقراء اقل',
-    'corresponding_to'                                  =>  'الموافق',
-    'colleges_and_institutes'                           =>  'الكليات والمراكز',
-    'introductory_tour'                                 =>  'جولة تعريفية',
-    'activities_videos'                                 =>  'تحديث الفيديوهات',
-    'newest_video'                                      =>  'احدث الفيديوهات',
-    'photo_album'                                       =>  'البوم الصور',
-    'browse_albums'                                     =>  'تصفح الالبومات',
-    'links_that_interest_you'                           =>   'روابط تهمك',
-
-    'recent_posts'                                      =>  'المقالات الحديثة',
-    'recent_news'                                       =>  'الأخبار الحديثة',
-    'recent_events'                                     =>  'الفعاليات الحديثة',
-    'applications_and_social_media'                     =>  'التطبيقات و وسائل التواصل',
-
-
-    'all_rights_reserved'                               =>  'جميع الحقوق محفوظة',
-    'statistics_and_numbers'                            =>  'احصائيات وارقام',
-    'admin'                                             =>  'الادارة',
-    'blog_single'                                       =>  'عرض المدونة',
-    'news_single'                                       =>  'اسعراض الخبر',
-    'event_single'                                      =>  'استعراض الحدث',
-    'ibb'                                               =>  'إب',
-    'university'                                        =>  'جامعة',
-    'welcome_back_login_to_your_account'                =>  'مرحبًا بعودتك! قم بتسجيل الدخول إلى حسابك.',
-    'remember_me'                                       =>  'تذكرني',
-    'enter_your'                                        =>  'ادخل',
-    'and_instructions_will_be_sent_to_you'              =>  ' وسيتم إرسال التعليمات لك!',
-    'send_email'                                        =>  'إرسال البريد الإلكتروني',
-    'already_have_an_account'                           =>  'لديك حساب بالفعل!',
-    'continue_reading'                                  =>  'مواصلة القراءة',
-
-    'blog_list'                                         =>  'المدونة',
-    'news_list'                                         =>  'الاخبار',
-    'events_list'                                        =>  'الفعاليات والاحداث القادمة',
-
-    'all_photo_albums'                                  =>  'كل البومات الصور',
-
-
-    // new work in in university 
-    'news_update'                                       =>  'تحديث الأخبار',
     'university_news'                                   =>  'أخبار المعهد',
     'institute_news'                                    =>  'أخبار المعهد',
     'activities_update'                                 =>  'تحديث الفعاليات',
@@ -1614,8 +1525,7 @@ return [
 
 
 
-    // --------------- common in tracks menu ----------//
-    'website_shortcuts'                     =>  'اختصارات الموقع',
+
 
 
 

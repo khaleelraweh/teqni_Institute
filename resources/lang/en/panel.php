@@ -13,54 +13,36 @@ return [
     'total_menus'               =>  'Total Menus',
     'total_supervisors'         =>  'Total Supervisors',
     'total_admin_pages'         =>  'Total Admin Pages',
-    'ibb'                       =>  'Ibb',
-    'univercity'                =>  'Univercity',
+    'ibb'                       =>  'Institute',
+    'univercity'                =>  'Teqani',
 
     ############################ Manage Web Menus #################################
-    'manage_menus'              => 'Manage  Menus',
+    'manage_menus'              => 'Manage Web Menus',
     'manage_company_menus'      => 'Manage Company Menus',
     'manage_topics_menus'       => 'Manage Topics Menus',
-    'manage_tracks_menus'       => 'Manage Tracks Menus',
-    'manage_support_menus'       => 'Manage Support Menus',
-    'manage_academic_program_menus'       => 'Manage Academic Program Menus',
+    // 'manage_tracks_menus'       => 'Manage Tracks Menus',
+    'manage_tracks_menus'       => 'Manage Website shortcuts Menus',
+    // 'manage_support_menus'       => 'Manage Support Menus',
+    'manage_support_menus'       => 'Manage Important Links Menus',
+    'manage_college_menus'       => 'Manage Instatute Department Menus',
 
 
     // --------------- Main Menu --------------//
-    'manage_main_menus'                 => 'Manage Main Menus',
-    'show_main_menus'                   => 'Main Menu',
-    'add_new_main_menu_item'            => 'Add New Main Menu Item',
-    'edit_existing_main_menu_item'      => 'Edit Existing Main Menu Item',
-    'category_menu'                     => 'Category Menu',
+    'show_web_menus'            => 'Main Menu',
+    'add_new_link'              => 'Add New Link',
+    'edit_existing_link'        => 'Edit Existing Link',
+    'category_menu'             => 'Category Menu',
 
-    // --------------- Academic program Menus --------------//
-    'show_academic_program_menus'            => 'Academic Program Menus',
-    'add_new_academic_program'              => 'Add New Academic Program',
-    'edit_existing_academic_program'        => 'Edit Existing Academic Program',
+    // --------------- Instatute Department Menus --------------//
+    'show_college_menus'            => 'Instatute Department Menus',
+    'add_new_college'              => 'Add New Instatute Department ',
+    'edit_existing_college'        => 'Edit Existing Instatute Department ',
 
 
     // --------------- Company Menu --------------//
     'show_company_menus'        => 'Company Menus',
     'add_new_company_link'              => 'Add New Company Menu',
     'edit_existing_company_menu_link'        => 'Edit Existing Company Menu',
-
-
-    // --------------- important link Menu --------------//
-    'manage_important_link_menus'   =>  'Manage Important Link Menus',
-    'show_important_link_menus'        => 'Important Link Menus',
-    'add_new_important_link_menu_item'              => 'Add New Important Link Menu Item',
-    'edit_existing_important_link_menu_item'        => 'Edit Existing Important Link Menu Item',
-
-    // --------------- contact us Menu --------------//
-    'manage_contact_us_menus'   =>  'Manage Contact Us Menus',
-    'show_contact_us_menus'        => 'Contact Us Menus',
-    'add_new_contact_us_menu_item'              => 'Add New Contact Us Menu Item',
-    'edit_existing_contact_us_menu_item'        => 'Edit Existing Contact Us Menu Item',
-
-    // --------------- policies and privacy Menu --------------//
-    'manage_policies_privacy_menus'   =>  'Manage Policies and Privacy Menus',
-    'show_policies_privacy_menus'        => 'Policies and Privacy Menus',
-    'add_new_policies_privacy_menu_item'              => 'Add New Policies and Privacy Menu Item',
-    'edit_existing_policies_privacy_menu_item'        => 'Edit Existing Policies and Privacy Menu Item',
 
     // --------------- Topics Menu --------------//
     'show_topics_menus'        => 'Topics Menus',
@@ -69,14 +51,25 @@ return [
 
 
     // --------------- tracks Menu --------------//
-    'show_tracks_menus'        => 'Tracks Menus',
-    'add_new_tracks_link'              => 'Add New Track Menu',
-    'edit_existing_tracks_menu_link'        => 'Edit Existing Track Menu',
+    // 'show_tracks_menus'        => 'Tracks Menus',
+    // 'add_new_tracks_link'              => 'Add New Track Menu',
+    // 'edit_existing_tracks_menu_link'        => 'Edit Existing Track Menu',
+
+    'show_tracks_menus'        => 'Website shortcuts Menus',
+    'add_new_tracks_link'              => 'Add New Website shortcut Menu',
+    'edit_existing_tracks_menu_link'        => 'Edit Existing Website shortcut Menu',
+
+    // --------------- common in tracks menu ----------//
+    'website_shortcuts'                     =>  'Website shortcuts',
 
     // --------------- support Menu --------------//
-    'show_support_menus'        => 'Support Menus',
-    'add_new_support_link'              => 'Add New Support Menu',
-    'edit_existing_support_menu_link'        => 'Edit Existing Support Menu',
+    // 'show_support_menus'        => 'Support Menus',
+    // 'add_new_support_link'              => 'Add New Support Menu',
+    // 'edit_existing_support_menu_link'        => 'Edit Existing Support Menu',
+
+    'show_support_menus'        => 'Important Links Menus',
+    'add_new_support_link'              => 'Add New Important Link Menu',
+    'edit_existing_support_menu_link'        => 'Edit Existing Important Link Menu',
 
 
     // ------------- Helps Menu ------------- //
@@ -110,10 +103,6 @@ return [
     'in_new_tab'                    =>  'In New Tab',
     'browse_button_title'           =>  'Browse button title',
     'show_browsing_button'          =>  'Show browse button',
-    'browse_button_options'         =>  'Browse button options',
-    'publishing_options'            =>  'Publishing options',
-    'slide_detail_options'          =>  'Slide detail options',
-
 
 
     ########################### Manage Categories  ##################################
@@ -329,16 +318,6 @@ return [
     'metadata_title'                                =>  'Introduction page title ( Page Title)',
     'metadata_description'                          =>  'Introduction page  Description (Page Description)',
     'metadata_keywords'                             =>  'Introduction page Keywords (Page Keywords)',
-    'cancel'                                        =>  'Cancel',
-    'ok'                                            =>  'Ok',
-    'yes_delete'                                    =>  'Yes,Delete',
-    'page_category_can_not_be_deleted'              =>  'Page Category can not be deleted',
-    'page_category_have_pages_you_must_delete_pages_before' =>  'Page category have pages , You must delete pages before',
-    'operation_options'                                       =>  'Options',
-    'operation_edit'                                          =>  'Edit',
-    'operation_delete'                                        =>  'Delete',
-    'operation_copy_link'                                     =>  'Copy Link',
-
 
 
     ########################### Manage Albums  ##################################
@@ -386,18 +365,6 @@ return [
 
     // ........... commons in About Instatutes ....... //
 
-    ########################### Manage president Speeches  ##################################
-
-    // =============  Manage president Speeches  ===============//
-    'manage_president_speeches'                          => 'Manage President Speeches',
-
-    // --------------- president speeches  --------------//
-    'show_president_speeches'                            => 'President Speeches',
-    'add_new_president_speech'                          => 'Add New President Speech',
-    'edit_existing_president_speech'                    => 'Edit Existing President Speech',
-
-    // ........... commons in President Speeches  ....... //
-
 
 
 
@@ -424,14 +391,12 @@ return [
     'manage_document_archive'                               =>  'Manage Document Archive',
     'show_document_archives'                               => 'Document Archives',
     'add_new_document_archive'                             => 'New Document Archive',
-    'edit_existing_document_archive'                       => 'Edit Existing Document Archive',
-    'document_format_message'                               =>  'The document must be of the following formats .PDF , .docx',
+    'edit_existing_document_archive'                       => 'Edit Existing Document Archive ',
 
 
     // ........... commons in Archive   ....... //
     'document_archive_data'                                =>  'Document Archive Data',
     'document_archive_name'                                =>  'Document Archive Name',
-    'attach_the_document'                                   =>  'Attach the document',
 
 
     // --------------- Document Statistics  --------------//
@@ -715,6 +680,8 @@ return [
     // ........... commons in question Video  ....... //
     'frequently_asked_questions'                    =>  'Frequently Asked Questions',
 
+
+
     ##############################################################
 
     // =============  Manage Testimonial   ===============//
@@ -728,7 +695,6 @@ return [
     // ........... commons in Testimontails  ....... //
     'testimonial'                           =>  'Testimonial',
     'what_students_saying'                  =>  'What Students Saying',
-
 
 
 
@@ -1539,50 +1505,6 @@ return [
 
 
 
-    // new work in in university 
-    'news_update'                                       =>  'News Update',
-    'university_news'                                   =>  'University News',
-    'activities_update'                                 =>  'Activities Update',
-    'university_activities'                             =>  'University Activities',
-    'calendar_gregorian'                                =>  'AD',
-    'calendar_hijri'                                    =>  'AH',
-    'read_more'                                         =>  'Read More',
-    'read_less'                                         =>  'Read Less',
-    'corresponding_to'                                  =>  'cor. to',
-    'colleges_and_institutes'                           =>  'Colleges and Centers',
-    'introductory_tour'                                 =>  'Introductory tour',
-    'activities_videos'                                 =>  'Activities Videos',
-    'newest_video'                                      =>  'Newest Videos',
-    'photo_album'                                       =>  'Photo album',
-    'browse_albums'                                     =>  'Browse albums',
-
-    'links_that_interest_you'                           =>   'Interested Link',
-
-    'recent_posts'                                      =>  'Recent Posts',
-    'recent_news'                                       =>  'Recent News',
-    'recent_events'                                     =>  'Recent Events',
-    'applications_and_social_media'                     =>  'Applications and social media',
-    'all_rights_reserved'                               =>  'All Rights Reserved',
-    'statistics_and_numbers'                            =>  'Statistics and Numbers',
-    'admin'                                             =>  'Admin',
-    'blog_single'                                       =>  'Blog Single',
-    'news_single'                                       =>  'News Single',
-    'event_single'                                      =>  'Event Single',
-    'ibb'                                               =>  'Ibb',
-    'university'                                        =>  'University',
-    'welcome_back_login_to_your_account'                =>  'Welcome back! Log in to your account.',
-    'remember_me'                                       =>  'Remember me',
-    'enter_your'                                        =>  'Enter Your ',
-    'and_instructions_will_be_sent_to_you'              =>  'and instructions will be sent to you!',
-    'send_email'                                        =>  'Send Email',
-    'already_have_an_account'                           =>  'Already have an accont!',
-    'continue_reading'                                  =>  'Continue Reading',
-    'blog_list'                                         =>  'Blog List',
-    'news_list'                                         =>  'News List',
-    'events_list'                                       =>  'Events List',
-    'all_photo_albums'                                  =>  'All photo albums',
-
-
     // new work in in Institute 
     'news_update'                                       =>  'News Update',
     'university_news'                                   =>  'Institute News',
@@ -1634,8 +1556,5 @@ return [
     'get_in_touch_message'                              =>  'For contact and inquiries, please write your message here',
     'welcome_to_dashboard'                              =>  'Welcome to dashboard',
     'doc_archive_name'                                  =>  'Archive Name',
-
-
-    'website_shortcuts'                     =>  'Website shortcuts',
 
 ];
