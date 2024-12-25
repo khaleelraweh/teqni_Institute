@@ -8,8 +8,9 @@
                     <div class="col-md-8 col-xl-6 mx-auto">
                         <div class="card">
                             <div class="row">
-                                <div class="col-md-4 pe-md-0">
-                                    <div class="auth-side-wrapper">
+                                <div class="col-md-4 pe-md-0 d-flex justify-content-center align-items-center">
+                                    <div class="auth-side-wrapper "
+                                        style="height:17.6em;background-size:contain;background-repeat:no-repeat;background-position:center;">
 
                                     </div>
                                 </div>
