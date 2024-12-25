@@ -1,7 +1,9 @@
 /* Auth pags  */
 .main-wrapper .page-wrapper.full-page{
     /* background-color: #248874; */
-    background-color: #ffaa00;
+    /* background-color: #ffaa00; */
+    background-color: rgba(255, 170, 0, 0.7);
+
 }
 
 .sidebar .sidebar-body .nav {
