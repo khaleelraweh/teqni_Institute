@@ -1539,11 +1539,11 @@ return [
 
 
 
-    // new work in in university 
+    // new work in in Institute 
     'news_update'                                       =>  'News Update',
-    'university_news'                                   =>  'University News',
+    'university_news'                                   =>  'Institute News',
     'activities_update'                                 =>  'Activities Update',
-    'university_activities'                             =>  'University Activities',
+    'university_activities'                             =>  'Institute Activities',
     'calendar_gregorian'                                =>  'AD',
     'calendar_hijri'                                    =>  'AH',
     'read_more'                                         =>  'Read More',
@@ -1569,7 +1569,7 @@ return [
     'news_single'                                       =>  'News Single',
     'event_single'                                      =>  'Event Single',
     'ibb'                                               =>  'Ibb',
-    'university'                                        =>  'University',
+    'university'                                        =>  'Institute',
     'welcome_back_login_to_your_account'                =>  'Welcome back! Log in to your account.',
     'remember_me'                                       =>  'Remember me',
     'enter_your'                                        =>  'Enter Your ',

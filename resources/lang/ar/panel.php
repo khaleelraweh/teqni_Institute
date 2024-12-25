@@ -15,7 +15,7 @@ return [
     'total_admin_pages'                 =>  'إجمالي صفحات الإدارة',
 
     'ibb'                               =>  'إب',
-    'univercity'                        =>  'جامعة',
+    'univercity'                        =>  'المعهد',
 
     ############################  إدارة القوائم ################################
     'manage_menus'                      => 'إدارة القوائم ',
@@ -444,8 +444,8 @@ return [
     'document_format_message'                               =>  'يجب أن تكون الوثيقة بالتنسيقات التالية ( PDF - Docx ) ',
 
     // --------------- Document Statistics  --------------//
-    'manage_statistics'                                     =>  'إدارة إحصائيات الجامعة',
-    'show_statistics'                                       => 'إحصائيات الجامعة',
+    'manage_statistics'                                     =>  'إدارة إحصائيات المعهد',
+    'show_statistics'                                       => 'إحصائيات المعهد',
     'add_new_statistic'                                     => 'إضافة إحصاء جديد',
     'edit_existing_statistic'                               => 'تعديل إحصاء موجود',
 
@@ -1507,9 +1507,9 @@ return [
 
     // new work in in university 
     'news_update'                                       =>  'تحديث الأخبار',
-    'university_news'                                   =>  'أخبار الجامعة',
+    'university_news'                                   =>  'أخبار المعهد',
     'activities_update'                                 =>  'تحديث الفعاليات',
-    'university_activities'                             =>  'فعاليات الجامعة',
+    'university_activities'                             =>  'فعاليات المعهد',
 
     'calendar_gregorian'                                =>  'م',
     'calendar_hijri'                                    =>  'هـ',
@@ -1538,7 +1538,7 @@ return [
     'news_single'                                       =>  'اسعراض الخبر',
     'event_single'                                      =>  'استعراض الحدث',
     'ibb'                                               =>  'إب',
-    'university'                                        =>  'جامعة',
+    'university'                                        =>  'المعهد',
     'welcome_back_login_to_your_account'                =>  'مرحبًا بعودتك! قم بتسجيل الدخول إلى حسابك.',
     'remember_me'                                       =>  'تذكرني',
     'enter_your'                                        =>  'ادخل',
