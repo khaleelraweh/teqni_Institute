@@ -76,7 +76,7 @@
 
     <!--Preloader area start here-->
     <div id="loader" class="loader">
-        <div class="loader-container">
+        <div class="loader-container" style="background-color: #ffaa00;">
             <div class='loader-icon'>
                 {{-- <img style="width: 90px;height:90px;" src="{{ asset('frontend/images/pre-logo-ibb.png') }}"
                     alt=""> --}}
