@@ -12,10 +12,10 @@
                         $site_img = asset('assets/site_settings/' . $siteSettings['site_img']->value);
 
                         if (!file_exists(public_path('assets/site_settings/' . $siteSettings['site_img']->value))) {
-                            $site_img = asset('image/not_found/placeholder.jpg');
+                            $site_img = asset('image/not_found/placeholder2.jpg');
                         }
                     } else {
-                        $site_img = asset('image/not_found/placeholder.jpg');
+                        $site_img = asset('image/not_found/placeholder2.jpg');
                     }
                 @endphp
 
