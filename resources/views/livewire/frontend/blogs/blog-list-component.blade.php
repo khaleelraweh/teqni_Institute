@@ -17,10 +17,6 @@
                 @endphp
 
                 <img style="height: 24em" src="{{ $site_img }}" alt="{{ $siteSettings['site_name']->value }}">
-
-
-                {{-- <img src="{{ $siteSettings['site_img']->value ? asset('assets/site_settings/' . $siteSettings['site_img']->value) : asset('frontend/images/breadcrumbs/2.jpg') }}"
-                    alt="{{ $siteSettings['site_name']->value }}"> --}}
             </div>
             <div class="breadcrumbs-text white-color">
                 <h1 class="page-title">
