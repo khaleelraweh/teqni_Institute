@@ -105,7 +105,9 @@ a:hover {
     border-left: 1px solid #cccccc1f;
 }
 .y-middle {
+    padding-top: 1.5em;
     border-top: 1px solid;
+    border-bottom: 1px solid;
 }
 /* slider  */
 .rs-slider.style1 .owl-nav .owl-next,
@@ -133,7 +135,7 @@ a:hover {
     color: var(--second-color);
 }
 .rs-blog.style2 .blog-item .blog-content.new-style .title a:hover {
-    color: var(--second-color);
+    color: var(--main-color) !important;
 }
 .rs-blog.style2
     .blog-item
@@ -189,12 +191,15 @@ a:hover {
 .rs-footer .footer-bottom .footer-social li a {
     background: var(--main-color);
 }
+/* .topbar-link-color:hover */
 .rs-footer .footer-bottom .footer-social li a:hover {
     color: #ffffff;
     background: var(--main-color);
+    /* color: var(--main-color);
+    background: #fff !important; */
 }
-.full-width-header .rs-header .topbar-area .topbar-contact li,
-.full-width-header .rs-header .topbar-area .topbar-contact li a,
+/* .full-width-header .rs-header .topbar-area .topbar-contact li,
+.full-width-header .rs-header .topbar-area .topbar-contact li a, */
 .topbar-link-color:hover {
     color: var(--main-color);
 }
@@ -219,14 +224,14 @@ a:hover {
     color: var(--main-color);
 }
 .blog-btn:hover {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .blog-btn:hover:after {
     left: 17px;
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog .blog-item .blog-content .blog-title a:hover {
-    color: var(--main-color) !important;
+    color: var(--main-color);
 }
 .rs-inner-blog .widget-area .widget-title:before {
     background: var(--main-color);
@@ -257,10 +262,10 @@ a:hover {
     color: var(--main-color) !important;
 }
 .rs-inner-blog .blog-item .blog-content .blog-meta .btm-cate li .blog-date i {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog .blog-item .blog-content .blog-meta .btm-cate li .author i {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog
     .widget-area
@@ -272,10 +277,10 @@ a:hover {
     color: var(--main-color);
 }
 .rs-inner-blog .blog-deatails .blog-full .single-post-meta li .p-date i {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog .blog-deatails .blog-full .single-post-meta li .p-date i {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .contact-page-section .contact-address-section .contact-info .icon-part i {
     color: var(--main-color) !important;

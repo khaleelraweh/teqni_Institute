@@ -105,7 +105,10 @@ a:hover {
     border-left: 1px solid #cccccc1f;
 }
 .y-middle {
+    padding-top: 1.5em;
     border-top: 1px solid;
+    border-bottom: 1px solid;
+    
 }
 /* slider  */
 .rs-slider.style1 .owl-nav .owl-next,
