@@ -226,7 +226,7 @@ a:hover {
     color: var(--main-color);
 }
 .rs-inner-blog .blog-item .blog-content .blog-title a:hover {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog .widget-area .widget-title:before {
     background: var(--main-color);
@@ -246,7 +246,7 @@ a:hover {
     .show-featured
     .post-desc
     .date {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog
     .widget-area
@@ -254,7 +254,7 @@ a:hover {
     .show-featured
     .post-desc
     a:hover {
-    color: var(--main-color);
+    color: var(--main-color) !important;
 }
 .rs-inner-blog .blog-item .blog-content .blog-meta .btm-cate li .blog-date i {
     color: var(--main-color);
